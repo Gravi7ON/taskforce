@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Дмитрий Радионов](https://up.htmlacademy.ru/nodejs-2/2/user/678357).
-* Наставник: `Неизвестно`.
+* Наставник: [Глеб Клецков](https://up.htmlacademy.ru/react/10/user/1487865).
 
 ---
 
