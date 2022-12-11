@@ -9,7 +9,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userMemoryRepository: UserMemoryRepository
+    private readonly userMemoryRepository: UserMemoryRepository,
   ) {}
 
   async register(dto: CreateUserDto) {
