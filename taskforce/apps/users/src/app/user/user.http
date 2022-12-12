@@ -1,8 +1,8 @@
 ### Find user
-GET http://localhost:3333/api/user/99869f43-342e-4fa9-94a3-596ae20732e7 HTTP/1.1
+GET http://localhost:3333/api/user/ec22b4e9-f63c-4d37-aa30-a70d9f7058a6 HTTP/1.1
 
 ### Update user password
-PATCH http://localhost:3333/api/user/3a4a3efd-ebe7-42e4-8d71-c44e7e959a69 HTTP/1.1
+PATCH http://localhost:3333/api/user/ec22b4e9-f63c-4d37-aa30-a70d9f7058a6 HTTP/1.1
 Content-Type: application/json
 
 {

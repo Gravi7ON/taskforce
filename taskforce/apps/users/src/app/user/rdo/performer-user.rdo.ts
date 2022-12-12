@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
 
 export class PerformerUserRdo {
-  @Expose({ name: '_id'})
+  @Expose({name: '_id'})
   public id: string;
 
   @Expose()
@@ -16,8 +16,8 @@ export class PerformerUserRdo {
   @Expose()
   public role: string;
 
-  @Expose()
-  public dateRegister: string;
+  @Expose({name: 'createdAt'})
+  public registerDate: string;
 
   @Expose()
   public about: string;
