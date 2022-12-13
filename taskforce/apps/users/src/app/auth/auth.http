@@ -17,6 +17,6 @@ POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "qwerty@gmail.com",
-  "passwordHash": "123456"
+  "email": "werty@gmail.com",
+  "passwordHash": "654321"
 }

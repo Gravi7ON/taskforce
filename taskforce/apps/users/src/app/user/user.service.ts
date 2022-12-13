@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { UpdatePasswordDto } from './dto/update-password-user.dto';
-import { UserMemoryRepository } from './user-memory.repository';
 import { UserEntity } from './user.entity';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
   constructor(
-    private readonly userMemoryRepository: UserMemoryRepository
+    private readonly userRepository: UserRepository
   ) {}
 
   async findUser(id: string) {
-    const existUser = await this.userMemoryRepository.findById(id);
+    const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
       throw new Error(`User with this id doesn't exist`)
@@ -20,7 +20,7 @@ export class UserService {
   }
 
   async updatePassword(id: string, dto: UpdatePasswordDto) {
-    const existUser = await this.userMemoryRepository.findById(id);
+    const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
       throw new Error(`User with this id doesn't exist`)
@@ -32,7 +32,7 @@ export class UserService {
 
     if (isCorrectCurrentPassword) {
       await userEntity.hashPassword(dto.newPassword);
-      await this.userMemoryRepository.update(id, userEntity)
+      await this.userRepository.update(id, userEntity)
 
       return userEntity;
     }
