@@ -1,7 +1,6 @@
 import { CRUDRepository } from '@taskforce/core';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import * as crypto from 'crypto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from '@taskforce/shared-types';
 import { UserEntity } from './user.entity';
@@ -17,7 +16,6 @@ export class UserRepository implements CRUDRepository<UserEntity, string, User> 
     const createdDate = new Date().toISOString();
     const user = {
       ...item,
-      _id: crypto.randomUUID(),
       createdAt: createdDate,
       updatedAt: createdDate
     }

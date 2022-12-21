@@ -15,7 +15,6 @@ export class AuthService {
   async register(dto: CreateUserDto) {
     const user: User = {
       ...dto,
-      _id: '',
       dateBirth: dayjs(dto.dateBirth).toDate()
     }
 
