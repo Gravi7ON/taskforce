@@ -17,7 +17,7 @@ model Task {
   description    String
   category       Category[]
   cost           Int? @default(1000)
-  deadline       DateTime? @default(now())
+  deadline       DateTime?
   image          String? @default("unknown.jpg")
   address        String? @default("unknown")
   tags           String? @default("")

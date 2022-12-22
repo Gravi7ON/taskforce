@@ -1,7 +1,7 @@
-import { Expose } from 'class-transformer';
-import { Comment, Performer } from '@taskforce/shared-types';
+import { Expose, Transform } from 'class-transformer';
+import { Comment, Performer, Category } from '@taskforce/shared-types';
 
-export class CreateTaskDto {
+export class TaskRdo {
   @Expose()
   public id: string;
 
@@ -12,7 +12,8 @@ export class CreateTaskDto {
   public description: string;
 
   @Expose()
-  public category: string;
+  @Transform(({value}) => value.map(category => category.title))
+  public category: Category[];
 
   @Expose()
   public cost?: number;

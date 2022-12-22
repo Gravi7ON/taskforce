@@ -1,10 +1,7 @@
-import { Category } from './category.interface';
-import { TaskStatus } from './task-status.enum';
-import { Comment } from './comment.interface';
-import { Performer } from './performer.interface';
+import { Performer, Comment, Category } from '@taskforce/shared-types';
 
 export interface Task {
-  id?: string;
+  id?: number;
   title: string;
   description: string;
   category: Category[];
@@ -13,10 +10,10 @@ export interface Task {
   image?: string;
   address?: string;
   tags?: string;
-  status: TaskStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  status?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
   userId: string;
-  comments: Comment[];
-  performers: Performer[];
+  comments?: Comment[];
+  performers?: Performer[];
 }
