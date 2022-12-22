@@ -23,6 +23,7 @@ model Task {
   tags           String? @default("")
   status         String @default("new")
   createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
   userId         String
   comments       Comment[]
   performers     Performer[]
