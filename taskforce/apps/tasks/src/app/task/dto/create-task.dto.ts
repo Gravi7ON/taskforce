@@ -1,6 +1,6 @@
 import { Performer, Comment, Category } from '@taskforce/shared-types';
 
-export interface Task {
+export class CreateTaskDto {
   id?: number;
   title: string;
   description: string;

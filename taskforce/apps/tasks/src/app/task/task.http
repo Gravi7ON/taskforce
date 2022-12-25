@@ -1,0 +1,13 @@
+# Create a new task
+POST http://localhost:3333/api/task HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Hello world!",
+  "description": "Расширенный текст публикации",
+  "userId": "10",
+  "category": [1]
+}
+
+### Delete task
+DELETE http://localhost:3333/api/task/14 HTTP/1.1
