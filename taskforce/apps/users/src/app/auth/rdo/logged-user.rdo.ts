@@ -1,7 +1,8 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 export class LoggedUserRdo {
-  @Expose({name: '_id'})
+  @Expose()
+  @Transform(({ obj }) => obj._id.toString())
   public id: string;
 
   @Expose()

@@ -1,7 +1,6 @@
-import { UserRole } from '@taskforce/shared-types';
 import { Expose, Transform } from 'class-transformer';
 
-export class CreatedUserRdo {
+export class EditUserRdo {
   @Expose()
   @Transform(({ obj }) => obj._id.toString())
   public id: string;
@@ -10,8 +9,14 @@ export class CreatedUserRdo {
   public name: string;
 
   @Expose()
-  public email: string;
+  public city: string;
 
   @Expose()
-  public role: UserRole;
+  public aboutMyself: string;
+
+  @Expose()
+  public specialization: string[];
+
+  @Expose()
+  public dateBirth: Date;
 }

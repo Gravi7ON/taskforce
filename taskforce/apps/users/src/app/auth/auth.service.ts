@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from '../user/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserRepository } from '../user/user.repository';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -45,5 +46,26 @@ export class AuthService {
     }
 
     return userEntity.toObject();
+  }
+
+  async updatePassword(id: string, dto: UpdatePasswordDto) {
+    const existUser = await this.userRepository.findById(id);
+
+    if (!existUser) {
+      throw new Error(`User with this id doesn't exist`)
+    }
+
+    const userEntity = new UserEntity(existUser);
+
+    const isCorrectCurrentPassword = await userEntity.comparePassword(dto.currentPassword);
+
+    if (isCorrectCurrentPassword) {
+      await userEntity.hashPassword(dto.newPassword);
+      await this.userRepository.update(id, userEntity)
+
+      return userEntity;
+    }
+
+    throw new Error('The current password doesn\'t correct');
   }
 }

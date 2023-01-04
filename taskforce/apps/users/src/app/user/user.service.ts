@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UpdatePasswordDto } from './dto/update-password-user.dto';
+import { EditProfileDto } from './dto/edit-profile.dto';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
 
@@ -19,7 +19,7 @@ export class UserService {
     return existUser;
   }
 
-  async updatePassword(id: string, dto: UpdatePasswordDto) {
+  async editProfile(id: string, dto: EditProfileDto) {
     const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
@@ -27,16 +27,10 @@ export class UserService {
     }
 
     const userEntity = new UserEntity(existUser);
+    userEntity.updateEntity(dto);
 
-    const isCorrectCurrentPassword = await userEntity.comparePassword(dto.currentPassword);
+    await this.userRepository.update(id, userEntity)
 
-    if (isCorrectCurrentPassword) {
-      await userEntity.hashPassword(dto.newPassword);
-      await this.userRepository.update(id, userEntity)
-
-      return userEntity;
-    }
-
-    throw new Error('The current password doesn\'t correct');
+    return userEntity;
   }
 }

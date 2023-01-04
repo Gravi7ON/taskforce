@@ -8,4 +8,6 @@ export class CreateUserDto {
   public role: UserRole;
   public avatar?: string;
   public dateBirth: Date;
+  public specialization?: string[];
+  public aboutMyself?: string;
 }

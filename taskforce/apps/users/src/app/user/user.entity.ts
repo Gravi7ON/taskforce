@@ -1,5 +1,6 @@
 import { User, UserCity, UserRole } from '@taskforce/shared-types';
 import { genSalt, compare, hash } from 'bcrypt';
+import { EditProfileDto } from './dto/edit-profile.dto';
 
 const SALT_ROUNDS = 10;
 
@@ -12,6 +13,8 @@ export class UserEntity implements User {
   public role: UserRole;
   public avatar?: string;
   public dateBirth: Date;
+  public aboutMyself?: string;
+  public specialization?: string[];
 
   constructor(user: User) {
     this.fillEntity(user);
@@ -40,8 +43,19 @@ export class UserEntity implements User {
     this.email = user.email;
     this.city = user.city;
     this.passwordHash = user.passwordHash;
-    this. role = user.role;
+    this.role = user.role;
     this.avatar = user.avatar ?? 'unknown.jpg';
     this.dateBirth = user.dateBirth;
+    this.aboutMyself = user.aboutMyself ?? '';
+    this.specialization = user.specialization ?? [];
+  }
+
+  public updateEntity(dto: EditProfileDto) {
+    this.name = dto.name ?? this.name;
+    this.city = dto.city ?? this.city;
+    this.dateBirth = dto.dateBirth ?? this.dateBirth;
+    this.aboutMyself = dto.aboutMyself ?? this.aboutMyself;
+    this.specialization = [...new Set(dto.specialization)]
+      .slice(0, 5) ?? this.specialization;
   }
 }
