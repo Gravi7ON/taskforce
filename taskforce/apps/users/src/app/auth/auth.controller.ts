@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { fillObject } from '@taskforce/core';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { AuthService } from './auth.service';
@@ -7,6 +7,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { CreatedUserRdo } from './rdo/created-user.rdo';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -24,11 +25,12 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() dto: LoginUserDto) {
-    const verifiedUser = await this.authService.verifyUser(dto);
+    const user = await this.authService.verifyUser(dto);
 
-    return fillObject(LoggedUserRdo, verifiedUser);
+    return this.authService.loginUser(user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async updatePassword(
     @Param('id', MongoidValidationPipe) id: string,
