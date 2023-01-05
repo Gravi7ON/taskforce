@@ -34,7 +34,7 @@ export class AuthController {
   @Patch(':id')
   async updatePassword(
     @Param('id', MongoidValidationPipe) id: string,
-    @Body() dto: UpdatePasswordDto
+    @Body() dto: UpdatePasswordDto,
   ) {
     const existedUser = await this.authService.updatePassword(id, dto);
     return fillObject(LoggedUserRdo, existedUser);

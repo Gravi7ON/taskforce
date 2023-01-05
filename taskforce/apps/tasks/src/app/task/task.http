@@ -1,13 +1,14 @@
 # Create a new task
 POST http://localhost:3333/api/task HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjcyOTQ3MjY3LCJleHAiOjE2NzI5NDc4Njd9.wXz8BJYVBku_dY2uokrhueJBGIqOTm6bxEw_RppOd_4
 
 {
   "title": "Hello world!",
   "description": "Расширенный текст публикации",
-  "userId": "10",
   "category": [1]
 }
 
 ### Delete task
-DELETE http://localhost:3333/api/task/14 HTTP/1.1
+DELETE http://localhost:3333/api/task/21 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I2YWQwMWY0NmRmMzc4OTcxZTBkZDYiLCJlbWFpbCI6IndlcnR5QGdtYWlsLmNvbSIsInJvbGUiOiLQmNGB0L_QvtC70L3QuNGC0LXQu9GMIiwibmFtZSI6Ikhhd2sgQ2hpcCIsImlhdCI6MTY3MjkzNTU0MCwiZXhwIjoxNjcyOTQ3NTQwfQ.CHf_fK1C-4Is1S60tPBEvQy1gBTujByTSmSL6ttQr9g

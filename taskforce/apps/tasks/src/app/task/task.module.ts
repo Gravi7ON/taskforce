@@ -1,14 +1,29 @@
 import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CategoryModule } from '../category/category.module';
 import { CommentModule } from '../comment/comment.module';
 import { TaskController } from './task.controller';
 import { TaskRepository } from './task.repositiry';
 import { TaskService } from './task.service';
+import { getJwtConfig } from '../../config/jwt.config';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { RolesGuard } from './guards/user-role.guard';
 
 @Module({
-  imports: [CategoryModule, CommentModule],
+  imports: [
+    CategoryModule,
+    CommentModule,
+    PassportModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getJwtConfig
+    })
+  ],
   controllers: [TaskController],
-  providers: [TaskService, TaskRepository],
+  providers: [TaskService, TaskRepository, JwtStrategy, RolesGuard],
   exports: [TaskRepository]
 })
 export class TaskModule {}
