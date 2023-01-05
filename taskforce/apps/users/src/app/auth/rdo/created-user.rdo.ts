@@ -3,7 +3,7 @@ import { Expose, Transform } from 'class-transformer';
 
 export class CreatedUserRdo {
   @Expose()
-  @Transform(({ obj }) => obj._id.toString())
+  @Transform(({obj}) => obj._id.toString())
   public id: string;
 
   @Expose()
