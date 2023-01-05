@@ -1,5 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { fillObject } from '@taskforce/core';
+import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -30,7 +31,7 @@ export class AuthController {
 
   @Patch(':id')
   async updatePassword(
-    @Param('id') id: string,
+    @Param('id', MongoidValidationPipe) id: string,
     @Body() dto: UpdatePasswordDto
   ) {
     const existedUser = await this.authService.updatePassword(id, dto);

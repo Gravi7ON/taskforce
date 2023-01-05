@@ -8,7 +8,7 @@ import {
   Validate
 } from 'class-validator';
 import { AUTH_USER_DATE_BIRTH_NOT_VALID } from '../../auth/auth.constant';
-import { CustomValidationMature } from '../../auth/dto/custom-validate-mature';
+import { CustomValidationMature } from '../../custom-validation-dto/custom-validate-mature';
 import { UserCity } from '@taskforce/shared-types';
 
 export class EditProfileDto {
@@ -16,12 +16,12 @@ export class EditProfileDto {
   @IsString()
   @MinLength(3)
   @MaxLength(50)
-  public name: string;
+  public name?: string;
 
   @IsOptional()
   @IsString()
   @IsEnum(UserCity)
-  public city: UserCity;
+  public city?: UserCity;
 
   @IsOptional()
   @IsISO8601(
@@ -29,7 +29,7 @@ export class EditProfileDto {
     {message: AUTH_USER_DATE_BIRTH_NOT_VALID}
   )
   @Validate(CustomValidationMature)
-  public dateBirth: Date;
+  public dateBirth?: Date;
 
   @IsOptional()
   @IsString({each: true})

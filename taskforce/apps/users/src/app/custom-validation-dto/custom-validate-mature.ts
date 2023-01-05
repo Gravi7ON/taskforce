@@ -1,7 +1,7 @@
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime.js';
-import { AUTH_USER_DATE_BIRTH_MATURE, AUTH_USER_DATE_BIRTH_MATURE_NOT_VALID } from '../auth.constant';
+import { AUTH_USER_DATE_BIRTH_MATURE, AUTH_USER_DATE_BIRTH_MATURE_NOT_VALID } from '../auth/auth.constant';
 
 dayjs.extend(relativeTime)
 
