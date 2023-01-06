@@ -14,7 +14,7 @@ import {
   AUTH_USER_DATE_BIRTH_NOT_VALID,
   AUTH_USER_EMAIL_NOT_VALID
 } from '../auth.constant';
-import { CustomValidationMature } from '../../custom-validation-dto/custom-validate-mature';
+import { CustomValidationMature } from '../../custom-validation-dto/custom-validate-mature.dto';
 
 export class CreateUserDto {
   @IsString()

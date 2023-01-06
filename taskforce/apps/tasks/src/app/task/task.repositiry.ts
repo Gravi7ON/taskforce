@@ -1,6 +1,7 @@
 // import { CRUDRepository } from '@taskforce/core';
 import { Injectable } from '@nestjs/common';
 import { Task } from '@taskforce/shared-types';
+import dayjs = require('dayjs');
 import { PrismaService } from '../prisma/prisma.service';
 import { TaskEntity } from './task.entity';
 
@@ -10,10 +11,10 @@ export class TaskRepository {
 
   public async create(item: TaskEntity): Promise<Task>  {
     const entityData = item.toObject();
-
     return this.prisma.task.create({
       data: {
         ...entityData,
+        deadline: dayjs(entityData.deadline).toDate(),
         category: {
           connect: [...entityData.category]
         },

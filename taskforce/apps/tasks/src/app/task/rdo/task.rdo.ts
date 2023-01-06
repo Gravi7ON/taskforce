@@ -44,4 +44,7 @@ export class TaskRdo {
 
   @Expose()
   public performers: Performer[];
+
+  @Expose()
+  public status: string;
 }

@@ -9,7 +9,7 @@ import {
   UseGuards,
   Request,
   ParseIntPipe,
-  Get
+  Get,
 } from '@nestjs/common';
 import { fillObject } from '@taskforce/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -18,6 +18,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskRdo } from './rdo/task.rdo';
 import { TaskService } from './task.service';
 import { RolesGuard } from './guards/user-role.guard';
+import { CheckAndLowercaseTagPipe } from '../pipes/check-and-lowercase-tag.pipe';
 
 @Controller('task')
 export class TaskController {
@@ -27,7 +28,7 @@ export class TaskController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
-  async create(@Body() dto: CreateTaskDto, @Request() req) {
+  async create(@Body(CheckAndLowercaseTagPipe) dto: CreateTaskDto, @Request() req) {
     const userId = req.user.id;
     const newTask = await this.taskService.createTask({
       ...dto,

@@ -40,7 +40,7 @@ model Comment {
   createdAt   DateTime @default(now())
   text        String
   userId      String
-  task        Task @relation(fields: [taskId], references: [id])
+  task        Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
   taskId      Int
 }
 
@@ -50,6 +50,6 @@ model Performer {
   updatedAt   DateTime @default(now())
   userId      String
   ready       Boolean @default(true)
-  task        Task @relation(fields: [taskId], references: [id])
+  task        Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
   taskId      Int
 }

@@ -1,17 +1,22 @@
 # Create a new task
 POST http://localhost:3333/api/task HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjcyOTg2OTc3LCJleHAiOjE2NzI5OTI5Nzd9.SWVBQVzrx79jDrkzl_3kVf-LvSR6ancqi-KMhzgXrxg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczMDA3MzEwLCJleHAiOjE2NzMwMTMzMTB9.JsWZvKP8MCo7E35SO8dJbdP5adFpHmp_0NEsC-lnHJs
 
 {
-  "title": "Hello world!",
-  "description": "Расширенный текст публикации",
-  "category": [1]
+  "title": "Hello worldl;kja;sdjf;dfj!",
+  "description": "Расширенный jlasdf;asdklfja;lskdfja;lsdkjf;alsdkjfa;lskdfтекст публикации lskdhfkajshdfasjdhf alksdfhaslkdjfhaslkdjf aklsdhf",
+  "category": [1],
+  "tags": "#jasdfj#jasdfj#dkHFHFHjf",
+  "deadline": "2024-10-19",
+  "cost": 200,
+  "address": "jjfjfjlfjalsdkfjlaksdfj",
+  "status": "new"
 }
 
 ### Delete task
-DELETE http://localhost:3333/api/task/45 HTTP/1.1
+DELETE http://localhost:3333/api/task/3 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjcyOTkzMDA1LCJleHAiOjE2NzI5OTkwMDV9.ZBZqSQsidtiQJXn9uw8H3DqrrhqYXIBf1b-8rEqyj9U
 
 ### Find task
-GET http://localhost:3333/api/task/45 HTTP/1.1
+GET http://localhost:3333/api/task/34 HTTP/1.1
