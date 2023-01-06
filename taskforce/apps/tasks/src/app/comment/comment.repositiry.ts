@@ -1,8 +1,8 @@
-// import { CRUDRepository } from '@taskforce/core';
+import { Injectable } from '@nestjs/common';
 import { CommentEntity } from './comment.entity';
 import { Comment } from '@taskforce/shared-types';
 import { PrismaService } from '../prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { CommentQuery } from './query/comment.query';
 
 @Injectable()
 export class CommentRepository {
@@ -22,13 +22,15 @@ export class CommentRepository {
     });
   }
 
-  public find(ids: number[] = []): Promise<Comment[]> {
+  public find({limit, sortDirection, page}: CommentQuery): Promise<Comment[]> {
     return this.prisma.comment.findMany({
-      where: {
-        id: {
-          in: ids.length > 0 ? ids : undefined
+      take: limit,
+      orderBy: [
+        {
+          createdAt: sortDirection
         }
-      }
+      ],
+      skip: page > 0 ? limit * (page - 1) : undefined
     });
   }
 }

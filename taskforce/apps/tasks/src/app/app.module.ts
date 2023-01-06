@@ -10,17 +10,17 @@ import { ENV_FILE_PATH } from './app.constant';
 
 @Module({
   imports: [
+    TaskModule,
+    PrismaModule,
+    CategoryModule,
+    CommentModule,
+    PerformerModule,
     ConfigModule.forRoot({
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
       load: [jwtConfig],
     }),
-    TaskModule,
-    PrismaModule,
-    CategoryModule,
-    CommentModule,
-    PerformerModule,
   ],
   controllers: [],
   providers: [],
