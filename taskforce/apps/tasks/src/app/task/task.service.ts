@@ -1,8 +1,9 @@
 import { Task } from '@taskforce/shared-types';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskEntity } from './task.entity';
 import { TaskRepository } from './task.repositiry';
+import { TASK_NOT_FOUND } from './task.constant';
 // import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
@@ -21,8 +22,14 @@ export class TaskService {
     this.taskRepository.destroy(id);
   }
 
-  async getTask(id: number): Promise<Task> {
-    return this.taskRepository.findById(id);
+  async getTask(id: number): Promise<Task | null> {
+    const existTask = await this.taskRepository.findById(id);
+
+    if (!existTask) {
+      throw new NotFoundException(TASK_NOT_FOUND);
+    }
+
+    return existTask;
   }
 
   async getTasks(): Promise<Task[]> {

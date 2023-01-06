@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
   "text": "Eu nisi aliquip quis nostrud sint veniam consectetur.",
-  "userId": "23",
-  "taskId": "2"
+  "userId": "21",
+  "taskId": "30"
 }
 
 ### Delete comment

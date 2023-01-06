@@ -1,4 +1,16 @@
-import { Body, Post, Controller, Delete, HttpCode, HttpStatus, Param, UseGuards, Request } from '@nestjs/common';
+import {
+  Body,
+  Post,
+  Controller,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Param,
+  UseGuards,
+  Request,
+  ParseIntPipe,
+  Get
+} from '@nestjs/common';
 import { fillObject } from '@taskforce/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -28,9 +40,15 @@ export class TaskController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async destroy(@Param('id') id: string) {
-    const taskId = parseInt(id, 10);
-    this.taskService.deleteTask(taskId);
+  async destroy(@Param('id', ParseIntPipe) id: number) {
+    this.taskService.deleteTask(id);
+  }
+
+  @Get('/:id')
+  async findTask(@Param('id', ParseIntPipe) id: number) {
+    const existTask = this.taskService.getTask(id)
+
+    return fillObject(TaskRdo, existTask)
   }
 
   // @Patch('/:id')
