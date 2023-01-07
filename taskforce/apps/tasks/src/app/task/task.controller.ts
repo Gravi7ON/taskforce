@@ -10,6 +10,7 @@ import {
   Request,
   ParseIntPipe,
   Get,
+  Query,
 } from '@nestjs/common';
 import { fillObject } from '@taskforce/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -19,12 +20,21 @@ import { TaskRdo } from './rdo/task.rdo';
 import { TaskService } from './task.service';
 import { RolesGuard } from './guards/user-role.guard';
 import { CheckAndLowercaseTagPipe } from '../pipes/check-and-lowercase-tag.pipe';
+import { MyTaskQuery } from './query/mytask.query';
 
 @Controller('task')
 export class TaskController {
   constructor(
     private readonly taskService: TaskService
   ) {}
+
+  @UseGuards(JwtAuthGuard)
+  @Get('mytask')
+  async findMyTasks(@Request() req, @Query() query: MyTaskQuery) {
+    const myTasks = await this.taskService.getMyTasks(req.user, query);
+
+    return myTasks;
+  }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
@@ -49,7 +59,7 @@ export class TaskController {
   async findTask(@Param('id', ParseIntPipe) id: number) {
     const existTask = this.taskService.getTask(id)
 
-    return fillObject(TaskRdo, existTask)
+    return fillObject(TaskRdo, existTask);
   }
 
   // @Patch('/:id')

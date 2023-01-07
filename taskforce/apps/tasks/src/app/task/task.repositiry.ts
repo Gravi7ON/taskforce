@@ -1,8 +1,9 @@
 // import { CRUDRepository } from '@taskforce/core';
 import { Injectable } from '@nestjs/common';
-import { Task } from '@taskforce/shared-types';
+import { Task, TokenPayload, UserRole } from '@taskforce/shared-types';
 import dayjs = require('dayjs');
 import { PrismaService } from '../prisma/prisma.service';
+import { MyTaskQuery } from './query/mytask.query';
 import { TaskEntity } from './task.entity';
 
 @Injectable()
@@ -45,13 +46,42 @@ export class TaskRepository {
   //   return Promise.resolve(undefined);
   // }
 
-  public find(): Promise<Task[]> {
+  public find(user: TokenPayload, {status}: MyTaskQuery): Promise<Task[]> {
+    if (user.role === UserRole.Performer) {
+      return this.prisma.task.findMany({
+        where: {
+          status: undefined || status,
+          performers: {
+            every: {
+              userId: {
+                in: user.id
+              }
+            }
+          }
+        },
+        include: {
+          comments: true,
+          category: true,
+          performers: true
+        }
+      })
+    }
+
     return this.prisma.task.findMany({
+      where: {
+        status: undefined || status,
+        userId: user.id
+      },
       include: {
         comments: true,
         category: true,
         performers: true
-      }
+      },
+      orderBy: [
+        {
+          createdAt: 'desc'
+        }
+      ]
     });
   }
 
