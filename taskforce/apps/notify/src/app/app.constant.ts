@@ -10,5 +10,10 @@ export enum EnvValidationMessage {
   RMQHostRequired = 'RabbitMQ host is required',
   RMQUserRequired = 'RabbitMQ user is required',
   RMQPasswordRequired = 'RabbitMQ password is required',
-  RMQSubscriberQueue = 'RabbitMQ Subscribers Queue is required'
+  RMQSubscriberQueue = 'RabbitMQ Subscribers Queue is required',
+  MailServerHostRequired =  'SMTP Server is required',
+  MailServerUserNameRequired = 'SMTP Server user name is required',
+  MailServerPasswordRequired = 'SMTP Server password is required',
+  MailServerDefaultFromRequired = 'Default value for mail from field is required',
+  MailServerPortRequired = 'SMTP Server port is required'
 }
