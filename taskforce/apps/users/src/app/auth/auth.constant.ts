@@ -6,3 +6,4 @@ export const AUTH_USER_DATE_BIRTH_NOT_VALID = 'The user date birth is not valid'
 export const AUTH_USER_DATE_BIRTH_MATURE = 18;
 export const AUTH_USER_DATE_BIRTH_MATURE_NOT_VALID = 'The user date birth is not matureness';
 export const MAX_AMOUT_OF_SKILLS = 5;
+export const RABBITMQ_SERVICE = Symbol('RABBITMQ_SERVICE');

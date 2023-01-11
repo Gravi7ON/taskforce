@@ -8,6 +8,7 @@ import databaseConfig from '../config/database.config';
 import { validateEnvironments } from './env.validation';
 import { getMongoDbConfig } from '../config/mongodb.config';
 import { jwtConfig } from '../config/jwt.config';
+import { rabbitMqOptions } from '../config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { jwtConfig } from '../config/jwt.config';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig, jwtConfig],
+      load: [databaseConfig, jwtConfig, rabbitMqOptions],
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(

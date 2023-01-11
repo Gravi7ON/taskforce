@@ -10,7 +10,7 @@ export class EmailSubscriberController {
     private readonly subscriberService: EmailSubscriberService,
   ) {}
 
-  @EventPattern({ cmd: CommandEvent.AddSubscriber})
+  @EventPattern({cmd: CommandEvent.AddSubscriber})
   public async create(subscriber: CreateSubscriberDto) {
     return this.subscriberService.addSubscriber(subscriber);
   }

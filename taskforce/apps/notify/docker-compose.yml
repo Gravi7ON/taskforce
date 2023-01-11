@@ -12,8 +12,8 @@ services:
     image: rabbitmq:3.11-management
     container_name: taskforce.notify.rabbitmq
     ports:
-      - '5672:5672'
       - '8084:15672'
+      - '5672:5672'
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: test
@@ -26,6 +26,7 @@ services:
 
   mongodb:
     image: mongo
+    restart: always
     container_name: taskforce.notify.mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
@@ -44,6 +45,7 @@ services:
 
   mongodb-express:
     image: mongo-express
+    restart: always
     container_name: taskforce.notify.mongo-express
     ports:
       - 8085:8081
