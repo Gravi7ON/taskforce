@@ -1,15 +1,15 @@
 ### Create a new comment
-POST http://localhost:3333/api/comment HTTP/1.1
+POST http://localhost:3333/api/comment/62 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczMDE3MjUzLCJleHAiOjE2NzMwMjMyNTN9.IotKUZwlfxXiJzgH-bdlQtZ0_HPz2Y5xBrWtUlDF7qs
 
 {
-  "text": "Eu nisi aliquip quis nostrud sint veniam consectetur.",
-  "userId": "23",
-  "taskId": "2"
+  "text": "Eu nisi aliquip quis nostrud sint veniam consectetur."
 }
 
 ### Delete comment
-DELETE  http://localhost:3333/api/comment/7 HTTP/1.1
+DELETE  http://localhost:3333/api/comment/11 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczMDEzNTk5LCJleHAiOjE2NzMwMTk1OTl9.pC9YU1XGqOty8E4GT8qE214JgGviaPXH5hk-00PqY-U
 
 ### Get comments
-GET http://localhost:3333/api/comment HTTP/1.1
+GET http://localhost:3333/api/comment?limit=1&sortDirection=asc HTTP/1.1

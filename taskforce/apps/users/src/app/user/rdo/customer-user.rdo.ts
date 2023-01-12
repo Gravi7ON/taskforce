@@ -1,7 +1,8 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 export class CustomerUserRdo {
-  @Expose({ name: '_id'})
+  @Expose()
+  @Transform(({obj}) => obj._id.toString())
   public id: string;
 
   @Expose()
@@ -20,7 +21,7 @@ export class CustomerUserRdo {
   public dateRegister: string;
 
   @Expose()
-  public about: string;
+  public aboutMyself: string;
 
   @Expose()
   public tasks: number;

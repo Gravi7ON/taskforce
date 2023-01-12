@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { UpdatePasswordDto } from './dto/update-password-user.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { AUTH_USER_NOT_FOUND } from '../auth/auth.constant';
+import { EditProfileDto } from './dto/edit-profile.dto';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
 
@@ -13,30 +14,24 @@ export class UserService {
     const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
-      throw new Error(`User with this id doesn't exist`)
+      throw new NotFoundException(AUTH_USER_NOT_FOUND)
     }
 
     return existUser;
   }
 
-  async updatePassword(id: string, dto: UpdatePasswordDto) {
+  async editProfile(id: string, dto: EditProfileDto) {
     const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
-      throw new Error(`User with this id doesn't exist`)
+      throw new NotFoundException(AUTH_USER_NOT_FOUND)
     }
 
     const userEntity = new UserEntity(existUser);
+    userEntity.updateEntity(dto);
 
-    const isCorrectCurrentPassword = await userEntity.comparePassword(dto.currentPassword);
+    await this.userRepository.update(id, userEntity)
 
-    if (isCorrectCurrentPassword) {
-      await userEntity.hashPassword(dto.newPassword);
-      await this.userRepository.update(id, userEntity)
-
-      return userEntity;
-    }
-
-    throw new Error('The current password doesn\'t correct');
+    return userEntity;
   }
 }

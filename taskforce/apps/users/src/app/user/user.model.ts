@@ -52,6 +52,16 @@ export class UserModel extends Document implements User {
 
   @Prop()
   public updatedAt: Date;
+
+  @Prop({
+    default: []
+  })
+  public specialization: string[];
+
+  @Prop({
+    default: ''
+  })
+  public aboutMyself: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

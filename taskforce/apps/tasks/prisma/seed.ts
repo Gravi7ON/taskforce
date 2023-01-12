@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 async function fillDb() {
   await prisma.category.upsert({
-    where: { id: 1 },
+    where: { id: 40 },
     update: {},
     create: {
       title: 'Грузоперевозки',
@@ -20,7 +20,7 @@ async function fillDb() {
     }
   });
   await prisma.category.upsert({
-    where: { id: 2 },
+    where: { id: 41 },
     update: {},
     create: {
       title: 'Клининг',

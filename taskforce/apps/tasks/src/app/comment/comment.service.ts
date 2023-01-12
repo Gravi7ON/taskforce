@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { CommentEntity } from './comment.entity';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentRepository } from './comment.repositiry';
+import { CommentQuery } from './query/comment.query';
 
 
 @Injectable()
@@ -18,10 +19,10 @@ export class CommentService {
   }
 
   async deleteComment(id: number): Promise<void> {
-    this.commentRepository.destroy(Number(id));
+    this.commentRepository.destroy(id);
   }
 
-  async getComments(): Promise<Comment[]> {
-    return this.commentRepository.find();
+  async getComments(query: CommentQuery): Promise<Comment[]> {
+    return this.commentRepository.find(query);
   }
 }

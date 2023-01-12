@@ -25,12 +25,12 @@ export class UserRepository implements CRUDRepository<UserEntity, string, User> 
   }
 
   public async destroy(id: string): Promise<void> {
-    this.userModel.deleteOne({id});
+    this.userModel.deleteOne({_id: id});
   }
 
   public async findById(id: string): Promise<User | null> {
     return this.userModel
-      .findOne({id})
+      .findOne({_id: id})
       .exec();
   }
 
