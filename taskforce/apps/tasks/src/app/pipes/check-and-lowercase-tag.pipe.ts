@@ -16,7 +16,7 @@ export class CheckAndLowercaseTagPipe implements PipeTransform {
     const spreadUniqueTags = [
       ...new Set(
         value.tags.split(/(#[a-zа-я0-9]+)/gi)
-          .filter(elem => elem !== '')
+          .filter(Boolean)
       )
     ];
 
