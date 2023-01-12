@@ -1,4 +1,4 @@
-import { CommandEvent, Task, TaskStatus, TokenPayload, UserRole } from '@taskforce/shared-types';
+import { Task, TaskStatus, TokenPayload, UserRole } from '@taskforce/shared-types';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskEntity } from './task.entity';
@@ -6,7 +6,6 @@ import { TaskRepository } from './task.repositiry';
 import { RABBITMQ_SERVICE, TASK_NOT_FOUND } from './task.constant';
 import { MyTaskQuery } from './query/mytask.query';
 import { ClientProxy } from '@nestjs/microservices';
-import { createEvent } from '@taskforce/core';
 // import { UpdateTaskDto } from './dto/update-task.dto';
 
 const SORT_TASK_STATUS_RANK = {
@@ -27,17 +26,7 @@ export class TaskService {
   async createTask(dto: CreateTaskDto): Promise<Task> {
     const taskEntity = new TaskEntity(dto);
 
-    const task = await this.taskRepository.create(taskEntity);
-
-    this.rabbitClient.emit(
-      createEvent(CommandEvent.SendTask),
-      {
-        cost: task.cost,
-        description: task.description
-      }
-    );
-
-    return task;
+    return this.taskRepository.create(taskEntity);
   }
 
   async deleteTask(id: number): Promise<void> {
