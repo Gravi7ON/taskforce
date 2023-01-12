@@ -2,7 +2,7 @@ import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedE
 import * as dayjs from 'dayjs';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
-import { CommandEvent, User } from '@taskforce/shared-types';
+import { CommandEvent, User, UserRole } from '@taskforce/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from '../user/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -36,13 +36,15 @@ export class AuthService {
 
     const createdUser = await this.userRepository.create(userEntity);
 
-    this.rabbitClient.emit(
-      createEvent(CommandEvent.AddSubscriber),
-      {
-        email: createdUser.email,
-        name: createdUser.name
-      }
-    );
+    if (createdUser.role === UserRole.Performer && createdUser.sendNotify) {
+      this.rabbitClient.emit(
+        createEvent(CommandEvent.AddSubscriber),
+        {
+          email: createdUser.email,
+          name: createdUser.name
+        }
+      );
+    }
 
     return createdUser;
   }

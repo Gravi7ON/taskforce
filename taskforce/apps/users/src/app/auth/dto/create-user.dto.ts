@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsEmail,
   IsEnum,
   IsISO8601,
@@ -53,6 +54,13 @@ export class CreateUserDto {
   @Validate(CustomValidationMature)
   public dateBirth: Date;
 
+  @IsOptional()
   public specialization?: string[];
+
+  @IsOptional()
   public aboutMyself?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  public sendNotify?: boolean;
 }

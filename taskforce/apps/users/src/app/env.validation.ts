@@ -56,7 +56,7 @@ class EnvironmentsConfig {
   @IsString({
     message: EnvValidationMessage.RMQSubscriberQueue
   })
-  public RABBIT_USERS_SERVICE_QUEUE: string;
+  public RABBIT_USERS_SERVICE_SUBSCRIBERS_QUEUE: string;
 }
 
 export function validateEnvironments(config: Record<string, unknown>) {

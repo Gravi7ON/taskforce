@@ -1,7 +1,7 @@
 # Create a new task
 POST http://localhost:3333/api/task HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczMDkzNzc0LCJleHAiOjE2NzMwOTk3NzR9.WuDD-wTWpG6BYQhE8p4JVJMCUm_rqmq7x9yKBi3hwX4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2JmZWY0ZDQzZjMyYTgzODcxOWQzMWMiLCJlbWFpbCI6InF3ZmZxd2V0cnR5QGdtYWlsLmNvbSIsInJvbGUiOiLQl9Cw0LrQsNC30YfQuNC6IiwibmFtZSI6ImhpcCBIYXdrIiwiaWF0IjoxNjczNTI0MDQ3LCJleHAiOjE2NzM1MjQ2NDd9.AlpNMdjbwekMfaDeAdwBXoeTSi5jvuElmSG5p0a0-JQ
 
 {
   "title": "Hello worldl;kja;sdjf;dfj!",
@@ -11,7 +11,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZ
   "deadline": "2024-10-19",
   "cost": 200,
   "address": "jjfjfjlfjalsdkfjlaksdfj",
-  "status": "progress"
+  "status": "new"
 }
 
 ### Delete task

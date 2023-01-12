@@ -62,6 +62,11 @@ export class UserModel extends Document implements User {
     default: ''
   })
   public aboutMyself: string;
+
+  @Prop({
+    default: false
+  })
+  public sendNotify: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

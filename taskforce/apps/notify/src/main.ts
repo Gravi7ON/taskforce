@@ -8,13 +8,14 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 
 import { AppModule } from './app/app.module';
-import { getRabbitMqConfig } from './config/rabbitmq.config';
+import { getRabbitMqConfig, getRabbitMqTaskQueueConfig } from './config/rabbitmq.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get<ConfigService>(ConfigService);
   app.connectMicroservice(getRabbitMqConfig(configService));
+  app.connectMicroservice(getRabbitMqTaskQueueConfig(configService));
 
   await app.startAllMicroservices();
   Logger.log(`🚀 Notify service is running on`);
