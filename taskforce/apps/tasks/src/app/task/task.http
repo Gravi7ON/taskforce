@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ### Update task
 PATCH  http://localhost:3333/api/task/78 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjE1NzYxLCJleHAiOjE2NzM2MTYzNjF9.xFijiHMHmFUCfnrpArv8VmvIzJGBuUzEnG8g3zr7pRI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjE4MzM2LCJleHAiOjE2NzM2MTg5MzZ9.wiX2p9seMcQiugaoMhvEg86-egBIsbNk_xT3jmSWzqI
 Content-Type: application/json
 
 {
@@ -25,10 +25,14 @@ Content-Type: application/json
   "category": [1],
   "tags": "#jasdfj#jasdfj#dkHFHFHjf",
   "deadline": "2024-10-19",
-  "cost": 200,
+  "cost": 800,
   "address": "jjfjfjlfjalsdkfjlaksdfj",
   "status": "new"
 }
+
+### Switch task status
+PATCH  http://localhost:3333/api/task/status/78?status=completed HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjIxNjUyLCJleHAiOjE2NzM2MjIyNTJ9.86hcjToEyMffvFy8KWyp-_lSuW8c0rmMeJLMiylnN2U
 
 ### Delete task
 DELETE http://localhost:3333/api/task/300 HTTP/1.1
