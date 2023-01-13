@@ -1,12 +1,11 @@
 import { Task, TaskStatus, TokenPayload, UserRole } from '@taskforce/shared-types';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskEntity } from './task.entity';
 import { TaskRepository } from './task.repositiry';
-import { RABBITMQ_SERVICE, TASK_NOT_FOUND } from './task.constant';
+import { TaskMessage, TaskStatusMessage } from './task.constant';
 import { MyTaskQuery } from './query/mytask.query';
-import { ClientProxy } from '@nestjs/microservices';
-// import { UpdateTaskDto } from './dto/update-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 const SORT_TASK_STATUS_RANK = {
   'new': 0,
@@ -20,7 +19,6 @@ const SORT_TASK_STATUS_RANK = {
 export class TaskService {
   constructor(
     private readonly taskRepository: TaskRepository,
-    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
   ) {}
 
   async createTask(dto: CreateTaskDto): Promise<Task> {
@@ -37,7 +35,7 @@ export class TaskService {
     const existTask = await this.taskRepository.findById(id);
 
     if (!existTask) {
-      throw new NotFoundException(TASK_NOT_FOUND);
+      throw new NotFoundException(TaskMessage.NotFound);
     }
 
     return existTask;
@@ -47,7 +45,7 @@ export class TaskService {
     const tasks = await this.taskRepository.find(user, query);
 
     if (tasks.length === 0) {
-      throw new NotFoundException(TASK_NOT_FOUND);
+      throw new NotFoundException(TaskMessage.NotFound);
     }
 
     let isTasksIncludeNewSatatus: string;
@@ -65,7 +63,58 @@ export class TaskService {
     return tasks
   }
 
-  // async updateTask(id: number, dto: UpdateTaskDto): Promise<Task> {
-  //   throw new Error('Not implemented…');
-  // }
+  async editTask(id: number, dto: UpdateTaskDto): Promise<Task> {
+    const existTask = await this.taskRepository.findById(id);
+
+    if (!existTask) {
+      throw new NotFoundException(TaskMessage.NotFound);
+    }
+
+    if (existTask.userId !== dto.userId) {
+      throw new ConflictException(TaskMessage.ForbidenUpdate);
+    }
+
+    const taskEntity = new TaskEntity({...existTask, ...dto});
+
+    return this.taskRepository.update(id, taskEntity)
+  }
+
+  async switchStatus(id: number, user: TokenPayload, query: MyTaskQuery): Promise<Task> {
+    const existTask = await this.taskRepository.findById(id);
+
+    if (!existTask) {
+      throw new NotFoundException(TaskMessage.NotFound);
+    }
+
+    if (existTask.userId !== user.id) {
+      throw new ConflictException(TaskMessage.ForbidenUpdate);
+    }
+
+    if (!query.status) {
+      throw new BadRequestException(TaskMessage.QueryRequired)
+    }
+
+    switch(query.status) {
+      case TaskStatus.New:
+        throw new BadRequestException(`${TaskStatusMessage.ForbiddenCancele}, now status ${existTask.status }`);
+      case TaskStatus.Canceled:
+        if (existTask.status !== TaskStatus.New) {
+          throw new BadRequestException(`${TaskStatusMessage.ForbiddenCancele}, now status ${existTask.status }`);
+        }
+        break;
+      case TaskStatus.Completed:
+        if (existTask.status !== TaskStatus.Progress) {
+          throw new BadRequestException(`${TaskStatusMessage.ForbiddenComplete}, now status ${existTask.status }`);
+        }
+        break;
+      case TaskStatus.Progress:
+        if (existTask.status !== TaskStatus.New) {
+          throw new BadRequestException(`${TaskStatusMessage.ForbiddenProgress}, now status ${existTask.status }`);
+        }
+    }
+
+    const taskEntity = new TaskEntity({...existTask, ...query});
+
+    return this.taskRepository.update(id, taskEntity)
+  }
 }

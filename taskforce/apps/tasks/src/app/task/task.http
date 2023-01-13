@@ -1,7 +1,23 @@
-# Create a new task
+### Create a new task
 POST http://localhost:3333/api/task HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjA3MDg5LCJleHAiOjE2NzM2MDc2ODl9.Q8mVggsa01gCY7Al38Crd4Wb5rejzjVoWy9iVUC9PXI
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2JmZWY0ZDQzZjMyYTgzODcxOWQzMWMiLCJlbWFpbCI6InF3ZmZxd2V0cnR5QGdtYWlsLmNvbSIsInJvbGUiOiLQl9Cw0LrQsNC30YfQuNC6IiwibmFtZSI6ImhpcCBIYXdrIiwiaWF0IjoxNjczNTMzNTY3LCJleHAiOjE2NzM1MzQxNjd9.nZZN7LKUmv-8EfDlIYpSoOEs6BLjy_lCwvMfCp4QjG4
+
+{
+  "title": "Hello worldl;kja;sdjf;dfj!",
+  "description": "Расширенный jlasdf;asdklfja;lskdfja;lsdkjf;alsdkjfa;lskdfтекст публикации lskdhfkajshdfasjdhf alksdfhaslkdjfhaslkdjf aklsdhf",
+  "category": [1],
+  "tags": "#jasdfj#jasdfj#dkHFHFHjf",
+  "deadline": "2024-10-19",
+  "cost": 200,
+  "address": "jjfjfjlfjalsdkfjlaksdfj",
+  "status": "new"
+}
+
+### Update task
+PATCH  http://localhost:3333/api/task/78 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjE1NzYxLCJleHAiOjE2NzM2MTYzNjF9.xFijiHMHmFUCfnrpArv8VmvIzJGBuUzEnG8g3zr7pRI
+Content-Type: application/json
 
 {
   "title": "Hello worldl;kja;sdjf;dfj!",
@@ -15,12 +31,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2JmZWY0Z
 }
 
 ### Delete task
-DELETE http://localhost:3333/api/task/3 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjcyOTkzMDA1LCJleHAiOjE2NzI5OTkwMDV9.ZBZqSQsidtiQJXn9uw8H3DqrrhqYXIBf1b-8rEqyj9U
+DELETE http://localhost:3333/api/task/300 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjEzNDgxLCJleHAiOjE2NzM2MTQwODF9.wLlh8h_bPtysKanBH29HAx5XRYLla2T9JNCMMEMbny0
 
 ### Find task
 GET http://localhost:3333/api/task/64 HTTP/1.1
 
 ### Find my tasks
 GET http://localhost:3333/api/task/mytask?status=progress HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczMDkzNzc0LCJleHAiOjE2NzMwOTk3NzR9.WuDD-wTWpG6BYQhE8p4JVJMCUm_rqmq7x9yKBi3hwX4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjA2ODE0LCJleHAiOjE2NzM2MDc0MTR9.o_AH2eMU0yShR18lxQ_nm-cYqi7_m7krNhAz4lqC8nI

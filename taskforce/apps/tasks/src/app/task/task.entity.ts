@@ -43,7 +43,7 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
   public toObject(): TaskEntity {
     return {
       ...this,
-      category: this.category.map(elem => ({id: elem})),
+      category: this.category.map(elem => ({id: typeof elem === 'number' ? elem : elem.id})),
     };
   }
 }

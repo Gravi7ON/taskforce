@@ -1,5 +1,6 @@
 ### Create a new category
-POST http://localhost:3333/api/categorie HTTP/1.1
+POST http://localhost:3333/api/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjA0MTIxLCJleHAiOjE2NzM2MDQ3MjF9.GZPtPEukEpmScq8nsDqISPiGJZ5NtfFYt3MtdIwEYz0
 Content-Type: application/json
 
 {
@@ -7,7 +8,7 @@ Content-Type: application/json
 }
 
 ### Get category by id
-GET http://localhost:3333/api/categorie/1 HTTP/1.1
+GET http://localhost:3333/api/category/1 HTTP/1.1
 
 ### Get all categories
-GET http://localhost:3333/api/categorie HTTP/1.1
+GET http://localhost:3333/api/category HTTP/1.1

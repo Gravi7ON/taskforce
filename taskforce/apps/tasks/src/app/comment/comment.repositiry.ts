@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CommentEntity } from './comment.entity';
 import { Comment } from '@taskforce/shared-types';
 import { PrismaService } from '../prisma/prisma.service';
 import { CommentQuery } from './query/comment.query';
+import { Prisma } from '@prisma/client';
+import { COMMENT_NOT_FOUND } from './comment.constant';
 
 @Injectable()
 export class CommentRepository {
@@ -20,6 +22,22 @@ export class CommentRepository {
        id,
       }
     });
+    try {
+      await this.prisma.task.delete({
+        where: {
+          id
+        }
+      });
+    } catch(error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === "P2025"
+      ) {
+        Logger.log(
+          COMMENT_NOT_FOUND
+        );
+      }
+    }
   }
 
   public find({limit, sortDirection, page}: CommentQuery): Promise<Comment[]> {

@@ -1,13 +1,16 @@
 // import { CRUDRepository } from '@taskforce/core';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import * as dayjs from 'dayjs';
+import { CRUDRepository } from '@taskforce/core';
 import { Task, TokenPayload, UserRole } from '@taskforce/shared-types';
-import dayjs = require('dayjs');
 import { PrismaService } from '../prisma/prisma.service';
 import { MyTaskQuery } from './query/mytask.query';
 import { TaskEntity } from './task.entity';
+import { Prisma } from '@prisma/client';
+import { TaskMessage } from './task.constant';
 
 @Injectable()
-export class TaskRepository {
+export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> {
   constructor(private readonly prisma: PrismaService) {}
 
   public async create(item: TaskEntity): Promise<Task>  {
@@ -35,16 +38,51 @@ export class TaskRepository {
   }
 
   public async destroy(id: number): Promise<void> {
-    await this.prisma.task.delete({
+    try {
+      await this.prisma.task.delete({
+        where: {
+          id
+        }
+      });
+    } catch(error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === "P2025"
+      ) {
+        Logger.log(
+          TaskMessage.NotFound
+        );
+      }
+    }
+  }
+
+  public update(id: number, item: TaskEntity): Promise<Task> {
+    const task = item.toObject();
+
+    return this.prisma.task.update({
       where: {
-        id,
+        id
+      },
+      data: {
+        ...task,
+        deadline: dayjs(task.deadline).toDate(),
+        category: {
+          connect: [...task.category]
+        },
+        comments: {
+          connect: []
+        },
+        performers: {
+          connect: []
+        }
+      },
+      include: {
+        comments: true,
+        category: true,
+        performers: true
       }
     });
   }
-
-  // public update(id: number, item: TaskEntity): Promise<Task> {
-  //   return Promise.resolve(undefined);
-  // }
 
   public find(user: TokenPayload, {status}: MyTaskQuery): Promise<Task[]> {
     if (user.role === UserRole.Performer) {
