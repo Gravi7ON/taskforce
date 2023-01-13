@@ -7,7 +7,7 @@ import {
   MinLength,
   Validate
 } from 'class-validator';
-import { AUTH_USER_DATE_BIRTH_NOT_VALID } from '../../auth/auth.constant';
+import { AuthUserMessageException } from '../../auth/auth.constant';
 import { CustomValidationMature } from '../../custom-validation-dto/custom-validate-mature.dto';
 import { UserCity } from '@taskforce/shared-types';
 
@@ -26,7 +26,7 @@ export class EditProfileDto {
   @IsOptional()
   @IsISO8601(
     {},
-    {message: AUTH_USER_DATE_BIRTH_NOT_VALID}
+    {message: AuthUserMessageException.DateBirthNotValid as string}
   )
   @Validate(CustomValidationMature)
   public dateBirth?: Date;

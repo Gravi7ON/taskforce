@@ -8,7 +8,7 @@ import { UserEntity } from '../user/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserRepository } from '../user/user.repository';
 import { UpdatePasswordDto } from './dto/update-password.dto';
-import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG, RABBITMQ_SERVICE } from './auth.constant';
+import { AuthUserMessageException, RABBITMQ_SERVICE } from './auth.constant';
 import { createEvent } from '@taskforce/core';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class AuthService {
     const existUser = await this.userRepository.findByEmail(user.email);
 
     if (existUser) {
-      throw new ConflictException(AUTH_USER_EXISTS)
+      throw new ConflictException(AuthUserMessageException.Exists)
     }
 
     const userEntity = await new UserEntity(user)
@@ -54,13 +54,13 @@ export class AuthService {
     const existUser = await this.userRepository.findByEmail(email);
 
     if (!existUser) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+      throw new NotFoundException(AuthUserMessageException.NotFound);
     }
 
     const userEntity = new UserEntity(existUser);
 
     if (!await userEntity.comparePassword(passwordHash)) {
-      throw new UnauthorizedException(AUTH_USER_PASSWORD_WRONG);
+      throw new UnauthorizedException(AuthUserMessageException.PasswordWrong);
     }
 
     return userEntity.toObject();
@@ -70,7 +70,7 @@ export class AuthService {
     const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+      throw new NotFoundException(AuthUserMessageException.NotFound);
     }
 
     const userEntity = new UserEntity(existUser);
@@ -84,7 +84,7 @@ export class AuthService {
       return userEntity.toObject();
     }
 
-    throw new UnauthorizedException(AUTH_USER_PASSWORD_WRONG);
+    throw new UnauthorizedException(AuthUserMessageException.PasswordWrong);
   }
 
   async loginUser(user: User) {

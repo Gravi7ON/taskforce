@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AUTH_USER_NOT_FOUND } from '../auth/auth.constant';
+import { AuthUserMessageException } from '../auth/auth.constant';
 import { EditProfileDto } from './dto/edit-profile.dto';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
@@ -14,7 +14,7 @@ export class UserService {
     const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND)
+      throw new NotFoundException(AuthUserMessageException.NotFound)
     }
 
     return existUser;
@@ -24,7 +24,7 @@ export class UserService {
     const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND)
+      throw new NotFoundException(AuthUserMessageException.NotFound)
     }
 
     const userEntity = new UserEntity(existUser);
