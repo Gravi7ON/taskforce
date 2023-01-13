@@ -12,4 +12,5 @@ export interface User {
   dateBirth: Date;
   aboutMyself?: string;
   specialization?: string[];
+  sendNotify?: boolean;
 }

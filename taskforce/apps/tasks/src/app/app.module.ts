@@ -7,6 +7,8 @@ import { CategoryModule } from './category/category.module';
 import { ConfigModule } from '@nestjs/config';
 import { jwtConfig } from '../config/jwt.config';
 import { ENV_FILE_PATH } from './app.constant';
+import { rabbitMqOptions } from '../config/rabbitmq.config';
+import { NotifySchedulerModule } from './notify-scheduler/notify-scheduler.module';
 
 @Module({
   imports: [
@@ -19,8 +21,9 @@ import { ENV_FILE_PATH } from './app.constant';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [jwtConfig],
+      load: [jwtConfig, rabbitMqOptions],
     }),
+    NotifySchedulerModule,
   ],
   controllers: [],
   providers: [],

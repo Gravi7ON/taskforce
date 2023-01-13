@@ -1,37 +1,52 @@
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import * as dayjs from 'dayjs';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@taskforce/shared-types';
+import { ClientProxy } from '@nestjs/microservices';
+import { CommandEvent, User, UserRole } from '@taskforce/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from '../user/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserRepository } from '../user/user.repository';
 import { UpdatePasswordDto } from './dto/update-password.dto';
-import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './auth.constant';
+import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG, RABBITMQ_SERVICE } from './auth.constant';
+import { createEvent } from '@taskforce/core';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
   ) {}
 
   async register(dto: CreateUserDto) {
     const user: User = {
       ...dto,
       dateBirth: dayjs(dto.dateBirth).toDate()
-    }
+    };
 
-    const existUser = await this.userRepository.findByEmail(user.email)
+    const existUser = await this.userRepository.findByEmail(user.email);
 
     if (existUser) {
       throw new ConflictException(AUTH_USER_EXISTS)
     }
 
     const userEntity = await new UserEntity(user)
-      .hashPassword(user.passwordHash)
+      .hashPassword(user.passwordHash);
 
-    return this.userRepository.create(userEntity);
+    const createdUser = await this.userRepository.create(userEntity);
+
+    if (createdUser.role === UserRole.Performer && createdUser.sendNotify) {
+      this.rabbitClient.emit(
+        createEvent(CommandEvent.AddSubscriber),
+        {
+          email: createdUser.email,
+          name: createdUser.name
+        }
+      );
+    }
+
+    return createdUser;
   }
 
   async verifyUser(dto: LoginUserDto) {
@@ -55,7 +70,7 @@ export class AuthService {
     const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND)
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
     }
 
     const userEntity = new UserEntity(existUser);
@@ -64,7 +79,7 @@ export class AuthService {
 
     if (isCorrectCurrentPassword) {
       await userEntity.hashPassword(dto.newPassword);
-      await this.userRepository.update(id, userEntity)
+      await this.userRepository.update(id, userEntity);
 
       return userEntity.toObject();
     }

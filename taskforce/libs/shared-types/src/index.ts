@@ -7,3 +7,5 @@ export * from './lib/category.interface';
 export * from './lib/comment.interface';
 export * from './lib/performer.interface';
 export * from './lib/token-payload.interface';
+export * from './lib/subscriber.interface';
+export * from './lib/command-event.enum';

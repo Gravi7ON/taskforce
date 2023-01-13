@@ -15,6 +15,7 @@ export class UserEntity implements User {
   public dateBirth: Date;
   public aboutMyself?: string;
   public specialization?: string[];
+  public sendNotify?: boolean;
 
   constructor(user: User) {
     this.fillEntity(user);
@@ -48,6 +49,7 @@ export class UserEntity implements User {
     this.dateBirth = user.dateBirth;
     this.aboutMyself = user.aboutMyself ?? '';
     this.specialization = user.specialization ?? [];
+    this.sendNotify = user.sendNotify ?? false;
   }
 
   public updateEntity(dto: EditProfileDto) {
