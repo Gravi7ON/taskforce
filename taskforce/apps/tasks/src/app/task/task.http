@@ -1,7 +1,23 @@
-# Create a new task
+### Create a new task
 POST http://localhost:3333/api/task HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjk5MjgwLCJleHAiOjE2NzM3NTkyODB9.6RRLvtOCYIoyyjMDkvWQpSdgWr2o0KcL8gpRAjejKQc
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2JmZWY0ZDQzZjMyYTgzODcxOWQzMWMiLCJlbWFpbCI6InF3ZmZxd2V0cnR5QGdtYWlsLmNvbSIsInJvbGUiOiLQl9Cw0LrQsNC30YfQuNC6IiwibmFtZSI6ImhpcCBIYXdrIiwiaWF0IjoxNjczNTMzNTY3LCJleHAiOjE2NzM1MzQxNjd9.nZZN7LKUmv-8EfDlIYpSoOEs6BLjy_lCwvMfCp4QjG4
+
+{
+  "title": "Hello worldl;kja;sdjf;dfj!",
+  "description": "Расширенный jlasdf;asdklfja;lskdfja;lsdkjf;alsdkjfa;lskdfтекст публикации lskdhfkajshdfasjdhf alksdfhaslkdjfhaslkdjf aklsdhf",
+  "category": [2],
+  "tags": "#jasdfj#jasdfj#dkHFHFHjf",
+  "deadline": "2023-02-19",
+  "cost": 800,
+  "address": "Москва, ул.Ленина",
+  "status": "new"
+}
+
+### Update task
+PATCH  http://localhost:3333/api/task/78 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MwMWEwMTQzZjMyYTgzODcxOWQzMmEiLCJlbWFpbCI6InR0eUBnbWFpbC5jb20iLCJyb2xlIjoi0JjRgdC_0L7Qu9C90LjRgtC10LvRjCIsIm5hbWUiOiJkZGhpcCBIYXdrIiwiaWF0IjoxNjczNjg2OTIyLCJleHAiOjE2NzM2ODc1MjJ9.wU-Ml1-rCOPBREYcjJGiNcqW1pSuCYIzS8QFXQ-4vgA
+Content-Type: application/json
 
 {
   "title": "Hello worldl;kja;sdjf;dfj!",
@@ -9,18 +25,26 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2JmZWY0Z
   "category": [1],
   "tags": "#jasdfj#jasdfj#dkHFHFHjf",
   "deadline": "2024-10-19",
-  "cost": 200,
+  "cost": 800,
   "address": "jjfjfjlfjalsdkfjlaksdfj",
   "status": "new"
 }
 
+### Switch task status
+PATCH  http://localhost:3333/api/task/status/78?status=progress&respondId=17&taskId=33 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjg4MTgwLCJleHAiOjE2NzM3NDgxODB9.YklsSW3z7BxHwEFKjkz1DQ2u5XcT-KIRJeks0PXcq3M
+
 ### Delete task
-DELETE http://localhost:3333/api/task/3 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjcyOTkzMDA1LCJleHAiOjE2NzI5OTkwMDV9.ZBZqSQsidtiQJXn9uw8H3DqrrhqYXIBf1b-8rEqyj9U
+DELETE http://localhost:3333/api/task/300 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjEzNDgxLCJleHAiOjE2NzM2MTQwODF9.wLlh8h_bPtysKanBH29HAx5XRYLla2T9JNCMMEMbny0
 
 ### Find task
-GET http://localhost:3333/api/task/64 HTTP/1.1
+GET http://localhost:3333/api/task/33 HTTP/1.1
 
 ### Find my tasks
 GET http://localhost:3333/api/task/mytask?status=progress HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczMDkzNzc0LCJleHAiOjE2NzMwOTk3NzR9.WuDD-wTWpG6BYQhE8p4JVJMCUm_rqmq7x9yKBi3hwX4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczNjA2ODE0LCJleHAiOjE2NzM2MDc0MTR9.o_AH2eMU0yShR18lxQ_nm-cYqi7_m7krNhAz4lqC8nI
+
+### Find new task for performer
+GET http://localhost:3333/api/task?category=2,1&sortDirection=asc&page=1&limit=3&sortField=comments HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MwMWEwMTQzZjMyYTgzODcxOWQzMmEiLCJlbWFpbCI6InR0eUBnbWFpbC5jb20iLCJyb2xlIjoi0JjRgdC_0L7Qu9C90LjRgtC10LvRjCIsIm5hbWUiOiJkZGhpcCBIYXdrIiwiaWF0IjoxNjczNjk5MTI2LCJleHAiOjE2NzM3NTkxMjZ9.gX7bqvFGo4QpPlm5ZWxey1xxDiI0KqFTC4VgdKFdDBc

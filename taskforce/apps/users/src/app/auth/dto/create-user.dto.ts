@@ -12,8 +12,7 @@ import {
 } from 'class-validator';
 import { UserCity, UserRole } from '@taskforce/shared-types';
 import {
-  AUTH_USER_DATE_BIRTH_NOT_VALID,
-  AUTH_USER_EMAIL_NOT_VALID
+  AuthUserMessageException
 } from '../auth.constant';
 import { CustomValidationMature } from '../../custom-validation-dto/custom-validate-mature.dto';
 
@@ -25,7 +24,7 @@ export class CreateUserDto {
 
   @IsEmail(
     {},
-    {message: AUTH_USER_EMAIL_NOT_VALID}
+    {message: AuthUserMessageException.EmailNotValid as string}
   )
   public email: string;
 
@@ -49,7 +48,7 @@ export class CreateUserDto {
 
   @IsISO8601(
     {},
-    {message: AUTH_USER_DATE_BIRTH_NOT_VALID}
+    {message: AuthUserMessageException.DateBirthNotValid as string}
   )
   @Validate(CustomValidationMature)
   public dateBirth: Date;

@@ -1,7 +1,10 @@
 export interface Performer {
   id?: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   userId: string;
-  ready: boolean;
+  taskId: number;
+  assignee?: boolean;
+  statusWork?: string;
+  ready?: boolean;
 }

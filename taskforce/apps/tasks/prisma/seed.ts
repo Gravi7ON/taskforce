@@ -46,8 +46,7 @@ async function fillDb() {
             performers: {
               create: [
                 {
-                  userId: '15',
-                  ready: true
+                  userId: '15'
                 }
               ]
             }

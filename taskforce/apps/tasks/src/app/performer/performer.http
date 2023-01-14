@@ -1,0 +1,18 @@
+### Create new task respond
+POST http://localhost:3333/api/performer HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MwMWEwMTQzZjMyYTgzODcxOWQzMmEiLCJlbWFpbCI6InR0eUBnbWFpbC5jb20iLCJyb2xlIjoi0JjRgdC_0L7Qu9C90LjRgtC10LvRjCIsIm5hbWUiOiJkZGhpcCBIYXdrIiwiaWF0IjoxNjczNjg5NDc2LCJleHAiOjE2NzM3NDk0NzZ9.HQaLnxqua7mMQC7OZDtf5T1mY4hMMoslFTxlzXkJkVk
+Content-Type: application/json
+
+{
+  "taskId": 78
+}
+
+### Reject finished task
+PATCH http://localhost:3333/api/performer HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MwMWEwMTQzZjMyYTgzODcxOWQzMmEiLCJlbWFpbCI6InR0eUBnbWFpbC5jb20iLCJyb2xlIjoi0JjRgdC_0L7Qu9C90LjRgtC10LvRjCIsIm5hbWUiOiJkZGhpcCBIYXdrIiwiaWF0IjoxNjczNjg5NDc2LCJleHAiOjE2NzM3NDk0NzZ9.HQaLnxqua7mMQC7OZDtf5T1mY4hMMoslFTxlzXkJkVk
+Content-Type: application/json
+
+{
+  "taskId": 33,
+  "ready": false
+}

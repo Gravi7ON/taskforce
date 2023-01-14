@@ -45,11 +45,13 @@ model Comment {
 }
 
 model Performer {
-  id          Int @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-  userId      String
-  ready       Boolean @default(true)
-  task        Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  taskId      Int
+  id           Int @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+  userId       String @default("")
+  assignee     Boolean @default(false)
+  statusWork   String? @default("")
+  ready        Boolean @default(true)
+  task         Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId       Int
 }

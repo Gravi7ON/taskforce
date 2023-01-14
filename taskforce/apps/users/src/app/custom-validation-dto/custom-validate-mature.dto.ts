@@ -1,7 +1,7 @@
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime.js';
-import { AUTH_USER_DATE_BIRTH_MATURE, AUTH_USER_DATE_BIRTH_MATURE_NOT_VALID } from '../auth/auth.constant';
+import { AuthUserMessageException } from '../auth/auth.constant';
 
 dayjs.extend(relativeTime)
 
@@ -11,10 +11,10 @@ export class CustomValidationMature implements ValidatorConstraintInterface {
     return parseInt(
       dayjs(text).fromNow().replace(/\D/gi, ''),
       10
-    ) >= AUTH_USER_DATE_BIRTH_MATURE;
+    ) >= AuthUserMessageException.DateBirthMature;
   }
 
   defaultMessage() {
-    return AUTH_USER_DATE_BIRTH_MATURE_NOT_VALID
+    return AuthUserMessageException.DateBirthMatureNotValid as string
   }
 }

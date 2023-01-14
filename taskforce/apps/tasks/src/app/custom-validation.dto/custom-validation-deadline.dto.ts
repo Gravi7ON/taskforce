@@ -1,6 +1,6 @@
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 import * as dayjs from 'dayjs';
-import { TASK_DEALINE_NOT_VALID } from '../task/task.constant';
+import { TaskMessage } from '../task/task.constant';
 
 @ValidatorConstraint({ name: 'customCheckDate', async: false })
 export class CustomValidationDeadline implements ValidatorConstraintInterface {
@@ -9,6 +9,6 @@ export class CustomValidationDeadline implements ValidatorConstraintInterface {
   }
 
   defaultMessage() {
-    return TASK_DEALINE_NOT_VALID;
+    return TaskMessage.DeadlineNotValid as string;
   }
 }
