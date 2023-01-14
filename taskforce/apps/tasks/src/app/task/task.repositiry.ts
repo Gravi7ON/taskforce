@@ -2,12 +2,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as dayjs from 'dayjs';
 import { CRUDRepository } from '@taskforce/core';
-import { Task, TokenPayload, UserRole } from '@taskforce/shared-types';
+import { Performer, PerformerStatusWork, Task, TokenPayload, UserRole } from '@taskforce/shared-types';
 import { PrismaService } from '../prisma/prisma.service';
 import { MyTaskQuery } from './query/mytask.query';
 import { TaskEntity } from './task.entity';
 import { Prisma } from '@prisma/client';
 import { TaskMessage } from './task.constant';
+import { NewTaskQuery } from './query/new-tasks.query';
 
 @Injectable()
 export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> {
@@ -84,7 +85,28 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
     });
   }
 
-  public find(user: TokenPayload, {status}: MyTaskQuery): Promise<Task[]> {
+  public updatePerformer(respondId: number, isComplete?: boolean): Promise<Performer> {
+    return this.prisma.performer.update({
+      where: {
+        id: respondId
+      },
+      data: {
+        assignee: true,
+        statusWork: isComplete && PerformerStatusWork.Complete
+      }
+    });
+  }
+
+  public findPerformer(query: MyTaskQuery): Promise<Performer | null> {
+    return this.prisma.performer.findFirst({
+      where: {
+        id: query.respondId,
+        taskId: query.taskId
+      },
+    });
+  }
+
+  public find(user: TokenPayload, {status}: MyTaskQuery): Promise<Task[] | null> {
     if (user.role === UserRole.Performer) {
       return this.prisma.task.findMany({
         where: {
@@ -120,6 +142,51 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
           createdAt: 'desc'
         }
       ]
+    });
+  }
+
+  public async findNewTasks({limit, page, tag, sortDirection, sortField, category, city}: NewTaskQuery): Promise<Task[] | null> {
+    return this.prisma.task.findMany({
+      where: {
+        status: 'new',
+        category: {
+          some: {
+            id: {
+              in: category
+            }
+          }
+        },
+        address: {
+          contains: city
+        },
+        tags: {
+          contains: tag
+        }
+      },
+      take: limit,
+      include: {
+        comments: true,
+        category: true,
+        performers: true
+      },
+      orderBy: sortField === 'performers' ? [
+        {
+          performers: {
+            _count: 'desc'
+          }
+        }
+      ] : sortField === 'comments' ? [
+        {
+          comments: {
+            _count: 'desc'
+          }
+        },
+      ] : [
+        {
+          createdAt: sortDirection
+        }
+      ],
+      skip: page > 0 ? limit * (page - 1) : undefined,
     });
   }
 

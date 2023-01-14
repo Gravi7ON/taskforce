@@ -17,11 +17,6 @@ export class CommentRepository {
   }
 
   public async destroy(id: number): Promise<void> {
-    await this.prisma.comment.delete({
-      where: {
-       id,
-      }
-    });
     try {
       await this.prisma.task.delete({
         where: {

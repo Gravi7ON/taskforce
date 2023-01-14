@@ -1,4 +1,4 @@
 export enum PerformerStatusWork {
   Failed = 'failed',
-  Complete = 'complete'
+  Complete = 'completed'
 }

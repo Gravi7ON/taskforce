@@ -15,10 +15,20 @@ export class RolesGuard implements CanActivate {
     const isPerformer = user.role !== UserRole.Customer;
 
     if (isPerformer && request.route.path === '/api/category') {
-      throw new BadRequestException(`User with role customer only create category`);
+      throw new BadRequestException(`User with role customer only may create category`);
     }
 
-    if (isPerformer) {
+    if (!isPerformer && request.route.path === '/api/performer') {
+      throw new BadRequestException(`User with role performer only may create respond task`);
+    }
+
+    if (
+      isPerformer && (
+        request.route.path === '/api/task/status/:id' ||
+        request.route.path === '/api/task/:id' ||
+        request.route.path === '/api/task'
+      )
+    ) {
       throw new BadRequestException(`User with role customer only may ${Action[request.method]} task`);
     }
 

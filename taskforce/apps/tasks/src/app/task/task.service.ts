@@ -6,6 +6,7 @@ import { TaskRepository } from './task.repositiry';
 import { TaskMessage, TaskStatusMessage } from './task.constant';
 import { MyTaskQuery } from './query/mytask.query';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { NewTaskQuery } from './query/new-tasks.query';
 
 const SORT_TASK_STATUS_RANK = {
   'new': 0,
@@ -39,6 +40,16 @@ export class TaskService {
     }
 
     return existTask;
+  }
+
+  async findNewTasks(query: NewTaskQuery): Promise<Task[] | null> {
+    const newTasks = await this.taskRepository.findNewTasks(query);
+
+    if (newTasks.length === 0) {
+      throw new NotFoundException(TaskMessage.NotFound);
+    }
+
+    return newTasks;
   }
 
   async getMyTasks(user: TokenPayload, query: MyTaskQuery): Promise<Task[]> {
@@ -96,7 +107,9 @@ export class TaskService {
 
     switch(query.status) {
       case TaskStatus.New:
-        throw new BadRequestException(`${TaskStatusMessage.ForbiddenCancele}, now status ${existTask.status }`);
+        throw new BadRequestException(`${TaskStatusMessage.ForbiddenNew}, now status ${existTask.status }`);
+      case TaskStatus.Failed:
+        throw new BadRequestException(`${TaskStatusMessage.ForbiddenFailed}, now status ${existTask.status }`);
       case TaskStatus.Canceled:
         if (existTask.status !== TaskStatus.New) {
           throw new BadRequestException(`${TaskStatusMessage.ForbiddenCancele}, now status ${existTask.status }`);
@@ -106,15 +119,26 @@ export class TaskService {
         if (existTask.status !== TaskStatus.Progress) {
           throw new BadRequestException(`${TaskStatusMessage.ForbiddenComplete}, now status ${existTask.status }`);
         }
+        await this.taskRepository.updatePerformer(Number(query.respondId), true);
         break;
       case TaskStatus.Progress:
-        if (existTask.status !== TaskStatus.New) {
+        if (existTask.status !== TaskStatus.New || !query.respondId) {
           throw new BadRequestException(`${TaskStatusMessage.ForbiddenProgress}, now status ${existTask.status }`);
         }
+
+        if (!await this.taskRepository.findPerformer(query)) {
+          throw new NotFoundException(TaskStatusMessage.NotFoundPerformer);
+        }
+
+        if ((await this.taskRepository.findPerformer(query)).assignee) {
+          throw new ConflictException(TaskStatusMessage.PerformerBusy);
+        }
+
+        await this.taskRepository.updatePerformer(query.respondId);
     }
 
     const taskEntity = new TaskEntity({...existTask, ...query});
 
-    return this.taskRepository.update(id, taskEntity)
+    return this.taskRepository.update(id, taskEntity);
   }
 }

@@ -22,6 +22,8 @@ import { TaskService } from './task.service';
 import { RolesGuard } from './guards/user-role.guard';
 import { CheckAndLowercaseTagPipe } from '../pipes/check-and-lowercase-tag.pipe';
 import { MyTaskQuery } from './query/mytask.query';
+import { NewTaskQuery } from './query/new-tasks.query';
+import { NewTaskRdo } from './rdo/new-task.rdo';
 
 @Controller('task')
 export class TaskController {
@@ -54,6 +56,13 @@ export class TaskController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id', ParseIntPipe) id: number) {
     await this.taskService.deleteTask(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/')
+  async findNewTasks(@Query() query: NewTaskQuery) {
+    const newTasks = await this.taskService.findNewTasks(query);
+    return fillObject(NewTaskRdo, newTasks);
   }
 
   @Get('/:id')
