@@ -59,7 +59,7 @@ export class PerformerService {
     return rejectedRespond;
   }
 
-  async findFailedTasks({taskId, userId}) {
-    return this.performerRepository.findAll({taskId: Number(taskId), userId});
+  async findUserRespond(query) {
+    return this.performerRepository.findAll(query);
   }
 }

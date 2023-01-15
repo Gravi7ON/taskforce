@@ -17,5 +17,5 @@ Content-Type: application/json
   "ready": false
 }
 
-### Find failed tasks
-GET http://localhost:3333/api/performer?taskId=33&userId=63c01a0143f32a838719d32a HTTP/1.1
+### Find responded performer tasks
+GET http://localhost:3333/api/performer/responds?userId=63c01a0143f32a838719d32a&statusWork=completed HTTP/1.1

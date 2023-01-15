@@ -28,10 +28,10 @@ export class PerformerController {
     return fillObject(PerformerRdo, newTaskRespond);
   }
 
-  @Get('failed')
-  async findFailedUserTask(@Query() query) {
-    const failedUserTasks = await this.performerService.findFailedTasks(query);
+  @Get('responds')
+  async findUserRespond(@Query() query) {
+    const userResponds = await this.performerService.findUserRespond(query);
 
-    return fillObject(PerformerRdo, failedUserTasks);
+    return fillObject(PerformerRdo, userResponds);
   }
 }

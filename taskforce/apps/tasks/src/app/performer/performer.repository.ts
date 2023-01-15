@@ -24,12 +24,11 @@ export class PerformerRepository {
     });
   }
 
-  public findAll({taskId, userId}): Promise<Performer[]| null> {
+  public findAll({userId, statusWork}): Promise<Performer[]| null> {
     return this.prisma.performer.findMany({
       where: {
-        taskId,
         userId,
-        statusWork: 'failed'
+        statusWork
       }
     });
   }

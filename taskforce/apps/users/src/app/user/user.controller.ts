@@ -20,8 +20,8 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findUser(@Param('id', MongoidValidationPipe) id: string) {
-    const existedUser = await this.userService.findUser(id)
+  async findUser(@Param('id', MongoidValidationPipe) id: string, @Request() req) {
+    const existedUser = await this.userService.findUser(id, req)
 
     if (existedUser.role === UserRole.Performer) {
       return fillObject(PerformerUserRdo, existedUser)

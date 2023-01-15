@@ -1,5 +1,4 @@
 import * as dayjs from 'dayjs';
-import { CustomerReview } from '@taskforce/shared-types';
 import { Expose, Transform } from 'class-transformer';
 
 export class PerformerUserRdo {
@@ -37,9 +36,6 @@ export class PerformerUserRdo {
 
   @Expose()
   public rating: number;
-
-  @Expose()
-  public reviews: CustomerReview[];
 
   @Expose()
   public specialization: string
