@@ -58,4 +58,8 @@ export class PerformerService {
     await this.performerRepository.updateTaskStatus(dto);
     return rejectedRespond;
   }
+
+  async findUserRespond(query) {
+    return this.performerRepository.findAll(query);
+  }
 }

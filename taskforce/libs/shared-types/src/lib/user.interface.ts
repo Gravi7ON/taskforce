@@ -1,3 +1,4 @@
+import { CustomerReview } from './review.interfave';
 import { UserCity } from './user-city.enum';
 import { UserRole } from "./user-role.enum";
 
@@ -13,4 +14,6 @@ export interface User {
   aboutMyself?: string;
   specialization?: string[];
   sendNotify?: boolean;
+  reviews?: CustomerReview[];
+  rating?: number;
 }

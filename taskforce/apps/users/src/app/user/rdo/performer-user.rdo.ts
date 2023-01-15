@@ -1,3 +1,4 @@
+import * as dayjs from 'dayjs';
 import { Expose, Transform } from 'class-transformer';
 
 export class PerformerUserRdo {
@@ -29,14 +30,12 @@ export class PerformerUserRdo {
   @Expose()
   public failedTasks: number;
 
-  @Expose()
+  @Expose({name: 'dateBirth'})
+  @Transform(({value}) => dayjs(value).fromNow().replace(' ago', ''))
   public age: number;
 
   @Expose()
   public rating: number;
-
-  @Expose()
-  public ranking: number;
 
   @Expose()
   public specialization: string

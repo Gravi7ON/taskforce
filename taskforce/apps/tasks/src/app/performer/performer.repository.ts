@@ -24,6 +24,15 @@ export class PerformerRepository {
     });
   }
 
+  public findAll({userId, statusWork}): Promise<Performer[]| null> {
+    return this.prisma.performer.findMany({
+      where: {
+        userId,
+        statusWork
+      }
+    });
+  }
+
   public findTask({taskId}: CreateRespondDto): Promise<Task | null> {
     return this.prisma.task.findFirst({
       where: {

@@ -16,3 +16,6 @@ Content-Type: application/json
   "taskId": 33,
   "ready": false
 }
+
+### Find responded performer tasks
+GET http://localhost:3333/api/performer/responds?userId=63c01a0143f32a838719d32a&statusWork=completed HTTP/1.1
