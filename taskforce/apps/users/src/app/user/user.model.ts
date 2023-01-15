@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { User, UserCity, UserRole } from '@taskforce/shared-types';
+import { CustomerReview, User, UserCity, UserRole } from '@taskforce/shared-types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
@@ -67,6 +67,16 @@ export class UserModel extends Document implements User {
     default: false
   })
   public sendNotify: boolean;
+
+  @Prop({
+    default: []
+  })
+  public reviews: CustomerReview[];
+
+  @Prop({
+    default: 0
+  })
+  public rating: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "ddhip Hawk",
-  "email": "tty@gmail.com",
+  "email": "tdty@gmail.com",
   "city": "Москва",
   "passwordHash": "123456",
   "role": "Исполнитель",

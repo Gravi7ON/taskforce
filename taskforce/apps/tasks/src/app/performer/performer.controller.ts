@@ -1,4 +1,4 @@
-import { Body, Controller, Patch, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Query, Request, UseGuards } from '@nestjs/common';
 import { fillObject } from '@taskforce/core';
 import { JwtAuthGuard } from '../task/guards/jwt-auth.guard';
 import { RolesGuard } from '../task/guards/user-role.guard';
@@ -26,5 +26,12 @@ export class PerformerController {
     const newTaskRespond = await this.performerService.rejectRespond({...dto, userId: req.user.id});
 
     return fillObject(PerformerRdo, newTaskRespond);
+  }
+
+  @Get('failed')
+  async findFailedUserTask(@Query() query) {
+    const failedUserTasks = await this.performerService.findFailedTasks(query);
+
+    return fillObject(PerformerRdo, failedUserTasks);
   }
 }

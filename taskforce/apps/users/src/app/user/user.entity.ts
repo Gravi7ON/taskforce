@@ -1,6 +1,7 @@
-import { User, UserCity, UserRole } from '@taskforce/shared-types';
+import { CustomerReview, User, UserCity, UserRole } from '@taskforce/shared-types';
 import { genSalt, compare, hash } from 'bcrypt';
 import { EditProfileDto } from './dto/edit-profile.dto';
+import { UserReviewDto } from './dto/user-review.dto';
 
 const SALT_ROUNDS = 10;
 
@@ -16,6 +17,8 @@ export class UserEntity implements User {
   public aboutMyself?: string;
   public specialization?: string[];
   public sendNotify?: boolean;
+  public reviews: CustomerReview[];
+  public rating: number;
 
   constructor(user: User) {
     this.fillEntity(user);
@@ -50,6 +53,8 @@ export class UserEntity implements User {
     this.aboutMyself = user.aboutMyself ?? '';
     this.specialization = user.specialization ?? [];
     this.sendNotify = user.sendNotify ?? false;
+    this.rating = user.rating;
+    this.reviews = user.reviews;
   }
 
   public updateEntity(dto: EditProfileDto) {
@@ -59,5 +64,12 @@ export class UserEntity implements User {
     this.aboutMyself = dto.aboutMyself ?? this.aboutMyself;
     this.specialization = [...new Set(dto.specialization)]
       .slice(0, 5) ?? this.specialization;
+  }
+
+  public addReview(dto: UserReviewDto) {
+    this.reviews.push({
+      ...dto,
+      createdAt: new Date().toISOString()
+    })
   }
 }

@@ -1,3 +1,5 @@
+import * as dayjs from 'dayjs';
+import { CustomerReview } from '@taskforce/shared-types';
 import { Expose, Transform } from 'class-transformer';
 
 export class PerformerUserRdo {
@@ -29,14 +31,15 @@ export class PerformerUserRdo {
   @Expose()
   public failedTasks: number;
 
-  @Expose()
+  @Expose({name: 'dateBirth'})
+  @Transform(({value}) => dayjs(value).fromNow().replace(' ago', ''))
   public age: number;
 
   @Expose()
   public rating: number;
 
   @Expose()
-  public ranking: number;
+  public reviews: CustomerReview[];
 
   @Expose()
   public specialization: string

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { fillObject } from '@taskforce/core';
 import { UserRole } from '@taskforce/shared-types';
 import { CustomerUserRdo } from './rdo/customer-user.rdo';
@@ -8,6 +8,9 @@ import { EditProfileDto } from './dto/edit-profile.dto';
 import { EditUserRdo } from './rdo/edit-user.rdo';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UserReviewDto } from './dto/user-review.dto';
+import { AddReviewRdo } from './rdo/add-review.rdo';
+import { OnlyCustomerGuard } from './guards/only-customer.guard';
 
 @Controller('user')
 export class UserController {
@@ -25,6 +28,14 @@ export class UserController {
     }
 
     return fillObject(CustomerUserRdo, existedUser)
+  }
+
+  @UseGuards(JwtAuthGuard, OnlyCustomerGuard)
+  @Post('review/:id')
+  async reviewUser(@Param('id', MongoidValidationPipe) id: string, @Body() dto: UserReviewDto, @Request() req) {
+    const userReview = await this.userService.reviewUser(id, dto, req.user);
+
+    return fillObject(AddReviewRdo, userReview);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -48,4 +48,14 @@ export class UserRepository implements CRUDRepository<UserEntity, string, User> 
       }, {new: true})
       .exec();
   }
+
+  public async addReview(id: string, item: UserEntity, recomputedRating: number): Promise<User> {
+    return this.userModel
+      .findByIdAndUpdate(id, {
+        ...item.toObject(),
+        updatedAt: new Date().toISOString(),
+        rating: recomputedRating
+      }, {new: true})
+      .exec();
+  }
 }

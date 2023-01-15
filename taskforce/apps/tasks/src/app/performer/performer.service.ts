@@ -58,4 +58,8 @@ export class PerformerService {
     await this.performerRepository.updateTaskStatus(dto);
     return rejectedRespond;
   }
+
+  async findFailedTasks({taskId, userId}) {
+    return this.performerRepository.findAll({taskId: Number(taskId), userId});
+  }
 }

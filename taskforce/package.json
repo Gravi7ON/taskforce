@@ -26,6 +26,7 @@
     "class-validator": "^0.14.0",
     "cron": "^2.2.0",
     "dayjs": "^1.11.6",
+    "got": "^12.5.3",
     "handlebars": "^4.7.7",
     "joi": "^17.7.0",
     "mongoose": "^6.8.0",
