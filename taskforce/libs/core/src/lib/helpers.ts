@@ -14,7 +14,7 @@ export function createEvent(commandEvent: CommandEvent) {
   return {cmd: commandEvent};
 }
 
-export function createfailedSchemaResponse(failedCode: number, message: string) {
+export function createFailedSchemaResponse(failedCode: number, message: string) {
   if (failedCode === HttpStatus.NOT_FOUND) {
     return {
       properties: {

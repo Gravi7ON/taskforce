@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiBearerAuth, ApiConflictResponse, ApiNotFoundResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { createfailedSchemaResponse, createSchemaUserInfoResponse, fillObject } from '@taskforce/core';
+import { createFailedSchemaResponse, createSchemaUserInfoResponse, fillObject } from '@taskforce/core';
 import { UserRole } from '@taskforce/shared-types';
 import { CustomerUserRdo } from './rdo/customer-user.rdo';
 import { PerformerUserRdo } from './rdo/performer-user.rdo';
@@ -26,7 +26,7 @@ export class UserController {
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
     description: 'User not found',
-    schema: createfailedSchemaResponse(HttpStatus.NOT_FOUND, UserMessageException.NotFound)
+    schema: createFailedSchemaResponse(HttpStatus.NOT_FOUND, UserMessageException.NotFound)
   })
   @ApiResponse({
     status:HttpStatus.OK,
@@ -153,7 +153,7 @@ export class UserController {
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
     description: 'User not found',
-    schema: createfailedSchemaResponse(HttpStatus.NOT_FOUND, UserMessageException.NotFound)
+    schema: createFailedSchemaResponse(HttpStatus.NOT_FOUND, UserMessageException.NotFound)
   })
   @ApiResponse({
     status: HttpStatus.OK,

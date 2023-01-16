@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiConflictResponse, ApiNotFoundResponse, ApiParam, ApiResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
-import { createfailedSchemaResponse, fillObject } from '@taskforce/core';
+import { createFailedSchemaResponse, fillObject } from '@taskforce/core';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -27,7 +27,7 @@ export class AuthController {
   @ApiConflictResponse({
     status: HttpStatus.CONFLICT,
     description: 'User with this email already exists',
-    schema: createfailedSchemaResponse(HttpStatus.CONFLICT, AuthUserMessageException.Exists)
+    schema: createFailedSchemaResponse(HttpStatus.CONFLICT, AuthUserMessageException.Exists)
   })
   async create(@Body() dto: CreateUserDto) {
     const newUser = await this.authService.register(dto);
@@ -44,12 +44,12 @@ export class AuthController {
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
     description: 'User not found',
-    schema: createfailedSchemaResponse(HttpStatus.NOT_FOUND, AuthUserMessageException.NotFound)
+    schema: createFailedSchemaResponse(HttpStatus.NOT_FOUND, AuthUserMessageException.NotFound)
   })
   @ApiUnauthorizedResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'User password is wrong',
-    schema: createfailedSchemaResponse(HttpStatus.UNAUTHORIZED, AuthUserMessageException.PasswordWrong)
+    schema: createFailedSchemaResponse(HttpStatus.UNAUTHORIZED, AuthUserMessageException.PasswordWrong)
   })
   @HttpCode(HttpStatus.OK)
   async login(@Body() dto: LoginUserDto) {
@@ -74,12 +74,12 @@ export class AuthController {
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
     description: 'User not found',
-    schema: createfailedSchemaResponse(HttpStatus.NOT_FOUND, AuthUserMessageException.NotFound)
+    schema: createFailedSchemaResponse(HttpStatus.NOT_FOUND, AuthUserMessageException.NotFound)
   })
   @ApiUnauthorizedResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'User password is wrong',
-    schema: createfailedSchemaResponse(HttpStatus.UNAUTHORIZED, AuthUserMessageException.NotFound)
+    schema: createFailedSchemaResponse(HttpStatus.UNAUTHORIZED, AuthUserMessageException.NotFound)
   })
   async updatePassword(
     @Param('id', MongoidValidationPipe) id: string,
