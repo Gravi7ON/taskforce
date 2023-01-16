@@ -6,3 +6,5 @@ export enum UserMessageException {
   PerformerNotExucute = 'Performer not execute this task',
   OnlyPerformer = 'Reviews can create customer only to performer'
 }
+export const TASK_URL = 'http://localhost:3333/api/task';
+export const PERFORMER_URL = 'http://localhost:3333/api/performer/responds';

@@ -42,8 +42,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZ
 GET http://localhost:3333/api/task/33 HTTP/1.1
 
 ### Find my tasks
-GET http://localhost:3333/api/task/mytask?status=progress HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MwMWEwMTQzZjMyYTgzODcxOWQzMmEiLCJlbWFpbCI6InR0eUBnbWFpbC5jb20iLCJyb2xlIjoi0JjRgdC_0L7Qu9C90LjRgtC10LvRjCIsIm5hbWUiOiJkZGhpcCBIYXdrIiwiaWF0IjoxNjczNzgyMjk3LCJleHAiOjE2NzM4NDIyOTd9.gDs4_OIqda-KIDgK68svu-0aPmU_DtwJg2VyriOwB4g
+GET http://localhost:3333/api/task/mytask HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I3MGUzZjU2ZTcxYjQ1ZDNkNzMwNDkiLCJlbWFpbCI6ImVydHlAZ21haWwuY29tIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJuYW1lIjoiQ2hpcCBIYXdrIiwiaWF0IjoxNjczODg5MjI4LCJleHAiOjE2NzM5NDkyMjh9.M76GsaHJkad2EvjCr0w09fxw3EFRjahRDoJP5AtonOc
 
 ### Find new task for performer
 GET http://localhost:3333/api/task?category=2,1&sortDirection=asc&page=1&limit=3&sortField=comments HTTP/1.1

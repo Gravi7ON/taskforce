@@ -4,7 +4,7 @@ import { EditProfileDto } from './dto/edit-profile.dto';
 import { UserReviewDto } from './dto/user-review.dto';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
-import { UserMessageException } from './user.constant';
+import { PERFORMER_URL, TASK_URL, UserMessageException } from './user.constant';
 import axios from 'axios';
 
 @Injectable()
@@ -22,8 +22,8 @@ export class UserService {
 
     if (existUser.role === UserRole.Performer) {
       const userResponds = await Promise.all([
-        axios.get(`http://localhost:3333/api/performer/responds?userId=${id}&statusWork=failed`),
-        axios.get(`http://localhost:3333/api/performer/responds?userId=${id}&statusWork=completed`)
+        axios.get(`${PERFORMER_URL}?userId=${id}&statusWork=failed`),
+        axios.get(`${PERFORMER_URL}?userId=${id}&statusWork=completed`)
       ]);
 
       const userRespondsFailed = userResponds[0].data.length;
@@ -38,11 +38,11 @@ export class UserService {
     }
 
     const api = axios.create({
-      baseURL: `http://localhost:3333/api/task/mytask`,
+      baseURL: `${TASK_URL}/mytask`,
       headers: {'Authorization': `${req.rawHeaders[3]}`}
     });
 
-    const {data: tasks} = await api.get(`http://localhost:3333/api/task/mytask`);
+    const {data: tasks} = await api.get(`/mytask`);
 
     return {
       ...new UserEntity(existUser).toObject(),
@@ -83,7 +83,7 @@ export class UserService {
       }
     }
 
-    const {data: task} = await axios.get(`http://localhost:3333/api/task/${taskId}`);
+    const {data: task} = await axios.get(`${TASK_URL}/${taskId}`);
 
     if (!task) {
       throw new NotFoundException(UserMessageException.TaskNotFound);
@@ -110,7 +110,7 @@ export class UserService {
     const userEntity = new UserEntity(existUser);
     userEntity.addReview({taskId, text, grade, customerId: req.id});
 
-    const {data: failedTask} = await axios.get(`http://localhost:3333/api/performer/responds?userId=${id}&statusWork=failed`);
+    const {data: failedTask} = await axios.get(`${PERFORMER_URL}?userId=${id}&statusWork=failed`);
     const recomputedRating = existUser.reviews.reduce((sum, review) => sum += review.grade, 0) / (existUser.reviews.length + failedTask.length);
 
     return this.userRepository.addReview(id, userEntity, recomputedRating);
