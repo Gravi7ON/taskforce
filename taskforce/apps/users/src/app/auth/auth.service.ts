@@ -81,7 +81,7 @@ export class AuthService {
       await userEntity.hashPassword(dto.newPassword);
       await this.userRepository.update(id, userEntity);
 
-      return userEntity.toObject();
+      return;
     }
 
     throw new UnauthorizedException(AuthUserMessageException.PasswordWrong);
