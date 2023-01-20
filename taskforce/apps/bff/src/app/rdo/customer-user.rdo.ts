@@ -1,15 +1,13 @@
-import * as dayjs from 'dayjs';
-import { Expose, Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserCity, UserRole } from '@taskforce/shared-types';
+import { Expose } from 'class-transformer';
 
-export class PerformerUserRdo {
+export class CustomerUserRdo {
   @ApiProperty({
     description: 'The uniq user ID',
     example: '63b70e3f56e71b45d3d73049'
   })
   @Expose()
-  @Transform(({obj}) => obj._id.toString())
   public id: string;
 
   @ApiProperty({
@@ -57,38 +55,16 @@ export class PerformerUserRdo {
   public aboutMyself: string;
 
   @ApiProperty({
-    description: 'Successed tasks',
+    description: 'Amount new tasks',
     example: 5,
   })
   @Expose()
-  public successedTasks: number;
+  public tasks: number;
 
   @ApiProperty({
-    description: 'Failed tasks',
-    example: 5,
+    description: 'Amount all tasks',
+    example: 50,
   })
   @Expose()
-  public failedTasks: number;
-
-  @ApiProperty({
-    description: 'User age',
-    example: 29,
-  })
-  @Expose({name: 'dateBirth'})
-  @Transform(({value}) => dayjs(value).fromNow().replace(' ago', ''))
-  public age: number;
-
-  @ApiProperty({
-    description: 'Rating of user',
-    example: 5,
-  })
-  @Expose()
-  public rating: number;
-
-  @ApiProperty({
-    description: 'User specialization',
-    example: ['Строитель'],
-  })
-  @Expose()
-  public specialization: string
+  public newTasks: number;
 }

@@ -1,0 +1,3 @@
+### Get user by role
+GET http://localhost:3336/api/bff/user-by-role/63c01a0143f32a838719d32a HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MwMWEwMTQzZjMyYTgzODcxOWQzMmEiLCJlbWFpbCI6InR0eUBnbWFpbC5jb20iLCJyb2xlIjoi0JjRgdC_0L7Qu9C90LjRgtC10LvRjCIsIm5hbWUiOiJkZGhpcCBIYXdrIiwiaWF0IjoxNjc0MjA4NzQ5LCJleHAiOjE2NzQyMDkzNDl9.EtohGfWb4ZMOzss34lfzbk3yRES70XNKnsrq1mqEs6o

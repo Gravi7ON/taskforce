@@ -1,9 +1,6 @@
 import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiBearerAuth, ApiConflictResponse, ApiNotFoundResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { createFailedSchemaResponse, createSchemaUserInfoResponse, fillObject } from '@taskforce/core';
-import { UserRole } from '@taskforce/shared-types';
-import { CustomerUserRdo } from './rdo/customer-user.rdo';
-import { PerformerUserRdo } from './rdo/performer-user.rdo';
+import { createFailedSchemaResponse, fillObject } from '@taskforce/core';
 import { UserService } from './user.service';
 import { EditProfileDto } from './dto/edit-profile.dto';
 import { EditUserRdo } from './rdo/edit-user.rdo';
@@ -13,6 +10,7 @@ import { UserReviewDto } from './dto/user-review.dto';
 import { AddReviewRdo } from './rdo/add-review.rdo';
 import { OnlyCustomerGuard } from './guards/only-customer.guard';
 import { UserMessageException } from './user.constant';
+import { UserRdo } from './rdo/user.rdo';
 
 @ApiTags('User')
 @Controller('user')
@@ -31,9 +29,7 @@ export class UserController {
   @ApiResponse({
     status:HttpStatus.OK,
     description: 'Info about users',
-    content: {
-      "application/json": createSchemaUserInfoResponse()
-    }
+    type: UserRdo
   })
   @ApiParam({
     name: 'id',
@@ -41,14 +37,10 @@ export class UserController {
     example: '63b70e3f56e71b45d3d73049'
   })
   @Get(':id')
-  async findUser(@Param('id', MongoidValidationPipe) id: string, @Request() req) {
-    const existedUser = await this.userService.findUser(id, req)
+  async findUser(@Param('id', MongoidValidationPipe) id: string) {
+    const existedUser = await this.userService.findUser(id)
 
-    if (existedUser.role === UserRole.Performer) {
-      return fillObject(PerformerUserRdo, existedUser)
-    }
-
-    return fillObject(CustomerUserRdo, existedUser)
+    return fillObject(UserRdo, existedUser);
   }
 
   @UseGuards(JwtAuthGuard, OnlyCustomerGuard)

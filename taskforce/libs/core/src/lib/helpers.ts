@@ -82,7 +82,7 @@ export function createSchemaUserInfoResponse() {
           "email": "user@user.ru",
           "city": "Москва",
           "role": "Исполнитель",
-          "dateRegister": "2023-01-16T12:30:30.578Z",
+          "registerDate": "2023-01-16T12:30:30.578Z",
           "aboutMyself": "I am Groooooooot",
           "tasks": 5,
           "newTasks": 50

@@ -1,14 +1,17 @@
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime.js';
+import { Expose, Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserCity, UserRole } from '@taskforce/shared-types';
-import { Expose, Transform } from 'class-transformer';
 
-export class CustomerUserRdo {
+dayjs.extend(relativeTime)
+
+export class PerformerUserRdo {
   @ApiProperty({
     description: 'The uniq user ID',
     example: '63b70e3f56e71b45d3d73049'
   })
   @Expose()
-  @Transform(({obj}) => obj._id.toString())
   public id: string;
 
   @ApiProperty({
@@ -45,8 +48,8 @@ export class CustomerUserRdo {
     description: 'Date of register',
     example: new Date().toISOString()
   })
-  @Expose()
-  public dateRegister: string;
+  @Expose({name: 'createdAt'})
+  public registerDate: string;
 
   @ApiProperty({
     description: 'User info',
@@ -56,16 +59,38 @@ export class CustomerUserRdo {
   public aboutMyself: string;
 
   @ApiProperty({
-    description: 'Amount new tasks',
+    description: 'Successed tasks',
     example: 5,
   })
   @Expose()
-  public tasks: number;
+  public successedTasks: number;
 
   @ApiProperty({
-    description: 'Amount all tasks',
-    example: 50,
+    description: 'Failed tasks',
+    example: 5,
   })
   @Expose()
-  public newTasks: number;
+  public failedTasks: number;
+
+  @ApiProperty({
+    description: 'User age',
+    example: 29,
+  })
+  @Expose({name: 'dateBirth'})
+  @Transform(({value}) => dayjs(value).fromNow().replace(' ago', ''))
+  public age: number;
+
+  @ApiProperty({
+    description: 'Rating of user',
+    example: 5,
+  })
+  @Expose()
+  public rating: number;
+
+  @ApiProperty({
+    description: 'User specialization',
+    example: ['Строитель'],
+  })
+  @Expose()
+  public specialization: string;
 }
