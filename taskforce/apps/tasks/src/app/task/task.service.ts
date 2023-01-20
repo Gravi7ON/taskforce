@@ -2,7 +2,7 @@ import { Task, TaskStatus, TokenPayload, UserRole } from '@taskforce/shared-type
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskEntity } from './task.entity';
-import { TaskRepository } from './task.repositiry';
+import { TaskRepository } from './task.repository';
 import { TaskMessage, TaskStatusMessage } from './task.constant';
 import { MyTaskQuery } from './query/mytask.query';
 import { UpdateTaskDto } from './dto/update-task.dto';

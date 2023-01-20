@@ -2,7 +2,7 @@ import { Comment } from '@taskforce/shared-types';
 import { Injectable } from '@nestjs/common';
 import { CommentEntity } from './comment.entity';
 import { CreateCommentDto } from './dto/create-comment.dto';
-import { CommentRepository } from './comment.repositiry';
+import { CommentRepository } from './comment.repository';
 import { CommentQuery } from './query/comment.query';
 
 

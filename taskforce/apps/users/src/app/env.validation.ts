@@ -1,9 +1,7 @@
 import { IsNumber, IsString, Max, Min, validateSync } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { EnvValidationMessage}  from './app.constant';
-
-const MIN_PORT = 0;
-const MAX_PORT = 65535;
+import { PossiblePort } from '@taskforce/core';
 
 class EnvironmentsConfig {
   @IsString({
@@ -19,8 +17,8 @@ class EnvironmentsConfig {
   @IsNumber({}, {
     message: EnvValidationMessage.DBPortRequired
   })
-  @Min(MIN_PORT)
-  @Max(MAX_PORT)
+  @Min(PossiblePort.Min)
+  @Max(PossiblePort.Max)
   public MONGO_PORT: number;
 
   @IsString({
