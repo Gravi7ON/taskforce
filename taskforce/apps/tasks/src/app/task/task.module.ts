@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CategoryModule } from '../category/category.module';
 import { CommentModule } from '../comment/comment.module';
 import { TaskController } from './task.controller';
-import { TaskRepository } from './task.repositiry';
+import { TaskRepository } from './task.repository';
 import { TaskService } from './task.service';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from './strategies/jwt.strategy';
