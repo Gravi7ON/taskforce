@@ -13,42 +13,14 @@ export class UserService {
     private readonly userRepository: UserRepository
   ) {}
 
-  async findUser(id: string, req) {
+  async findUser(id: string) {
     const existUser = await this.userRepository.findById(id);
 
     if (!existUser) {
       throw new NotFoundException(UserMessageException.NotFound)
     }
 
-    if (existUser.role === UserRole.Performer) {
-      const userResponds = await Promise.all([
-        axios.get(`${PERFORMER_URL}?userId=${id}&statusWork=failed`),
-        axios.get(`${PERFORMER_URL}?userId=${id}&statusWork=completed`)
-      ]);
-
-      const userRespondsFailed = userResponds[0].data.length;
-      const userRespondsCompleted = userResponds[1].data.length;
-      const userEntity = new UserEntity(existUser).toObject();
-
-      return {
-        ...userEntity,
-        successedTasks: userRespondsCompleted,
-        failedTasks: userRespondsFailed
-      }
-    }
-
-    const api = axios.create({
-      baseURL: `${TASK_URL}/mytask`,
-      headers: {'Authorization': `${req.rawHeaders[3]}`}
-    });
-
-    const {data: tasks} = await api.get(`/mytask`);
-
-    return {
-      ...new UserEntity(existUser).toObject(),
-      tasks: tasks?.length,
-      newTasks: tasks?.filter(task => task.status === TaskStatus.New).length
-    };
+    return existUser;
   }
 
   async editProfile(id: string, dto: EditProfileDto) {
