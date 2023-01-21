@@ -1,0 +1,11 @@
+version: '3.5'
+services:
+  taskforce.bff:
+      image: dmitryradionov/taskforce.bff
+      restart: always
+      container_name: taskforce.bff.service
+      ports:
+        - 3336:3336
+      environment:
+        PORT: 3336
+        JWT_SECRET: secret

@@ -1,0 +1,5 @@
+FROM node:lts-alpine
+WORKDIR /app
+COPY ./dist/apps/bff .
+RUN npm install --omit=dev
+CMD ["node", "./main.js"]
