@@ -55,7 +55,7 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongodb:27017/
 
   taskforce.notify:
-    image: taskforce.notify
+    image: dmitryradionov/taskforce.notify
     restart: always
     depends_on:
       - mongodb

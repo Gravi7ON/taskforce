@@ -31,7 +31,7 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongodb:27017/
 
   taskforce.users:
-    image: taskforce.users
+    image: dmitryradionov/taskforce.users
     depends_on:
       - mongodb
       - mongodb-express

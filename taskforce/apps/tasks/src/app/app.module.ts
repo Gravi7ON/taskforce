@@ -13,7 +13,6 @@ import { NotifySchedulerModule } from './notify-scheduler/notify-scheduler.modul
 @Module({
   imports: [
     TaskModule,
-    PrismaModule,
     CategoryModule,
     CommentModule,
     PerformerModule,
@@ -24,6 +23,7 @@ import { NotifySchedulerModule } from './notify-scheduler/notify-scheduler.modul
       load: [jwtConfig, rabbitMqOptions],
     }),
     NotifySchedulerModule,
+    PrismaModule,
   ],
   controllers: [],
   providers: [],

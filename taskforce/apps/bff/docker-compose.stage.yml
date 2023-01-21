@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   taskforce.bff:
-      image: taskforce.bff
+      image: dmitryradionov/taskforce.bff
       restart: always
       container_name: taskforce.bff.service
       ports:
