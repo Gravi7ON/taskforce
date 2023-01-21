@@ -13,7 +13,8 @@
         "outputPath": "dist/apps/tasks",
         "main": "apps/tasks/src/main.ts",
         "tsConfig": "apps/tasks/tsconfig.app.json",
-        "assets": ["apps/tasks/src/assets"]
+        "assets": ["apps/tasks/src/assets"],
+        "generatePackageJson": true
       },
       "configurations": {
         "production": {
@@ -88,6 +89,15 @@
       "options": {
         "command": "npx prisma db seed",
         "cwd": "apps/tasks"
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run tasks:build",
+          "docker build -f ./apps/tasks/dockerfile . -t taskforce.tasks --no-cache --force-rm"
+        ]
       }
     }
   },
