@@ -1,5 +1,5 @@
 FROM node:lts-alpine
 WORKDIR /app
 COPY ./dist/apps/tasks .
-RUN npm install
+COPY ./node_modules/ ./node_modules
 CMD ["node", "./main.js"]

@@ -37,11 +37,16 @@ services:
 
   taskforce.tasks:
     container_name: taskforce.tasks
-    image: taskforce.tasks
+    image: dmitryradionov/taskforce.tasks
     depends_on:
       - postgres
+    networks:
+      - postgres
+    ports:
+      - "3333:3333"
     environment:
-      DATABASE_URL: postgres://admin:test@localhost:5432/taskforce-tasks
+      PORT: 3333
+      DATABASE_URL: postgres://admin:test@postgres:5432/taskforce-tasks
       RABBIT_USER: admin
       RABBIT_PASSWORD: test
       RABBIT_HOST: rabbitmq:5672
